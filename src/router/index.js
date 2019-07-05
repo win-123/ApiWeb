@@ -6,13 +6,14 @@ import Login from '@/pages/auth/Login'
 import ProjectList from '@/pages/project/ProjectList'
 import ProjectDetail from '@/pages/project/ProjectDetail'
 import DebugTalk from '@/pages/httprunner/DebugTalk'
-import RecordApi from '@/pages/fastrunner/api/RecordApi'
-import AutoTest from '@/pages/fastrunner/case/AutoTest'
+import RecordApi from '@/pages/project/api/RecordApi'
+import AutoTest from '@/pages/project/case/AutoTest'
 import GlobalEnv from '@/pages/variables/GlobalEnv'
 import ReportList from '@/pages/reports/ReportList'
-import RecordConfig from '@/pages/fastrunner/config/RecordConfig'
+import RecordConfig from '@/pages/project/config/RecordConfig'
 import Tasks from '@/pages/task/Tasks'
 import HostAddress from '@/pages/variables/HostAddress'
+import Cover from '@/pages/cover/Cover'
 
 Vue.use(Router);
 
@@ -20,22 +21,32 @@ export default new Router({
     mode:'history',
     routes: [
         {
-            path: '/fastrunner/register',
+            path: '/',
+            name: 'Cover',
+            component: Cover,
+            meta: {
+                title: 'ApiMange'
+            }
+        },
+        {
+            path: '/project/register',
             name: 'Register',
             component: Register,
             meta: {
                 title: '用户注册'
             }
-        }, {
-            path: '/fastrunner/login',
+        },
+        {
+            path: '/project/login',
             name: 'Login',
             component: Login,
             meta: {
                 title: '用户登录'
             }
-        }, {
+        },
+        {
 
-            path: '/fastrunner',
+            path: '/project',
             name: 'Index',
             component: Home,
             meta: {

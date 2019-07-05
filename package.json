@@ -1,8 +1,8 @@
 {
-  "name": "api-web",
+  "name": "api-Mange",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "尹全旺 <1263374981@qq.com>",
+  "description": "api-Mange",
+  "author": "",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",

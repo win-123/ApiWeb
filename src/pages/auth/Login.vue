@@ -1,5 +1,4 @@
 <template>
-
     <el-container class="login">
         <el-header>
             <el-row>
@@ -15,15 +14,9 @@
         </el-header>
         <el-main style="padding: 0px">
             <el-row>
-                <el-col :span="7">
-                    <div class="bottom-left">
-                        <img src="~@/assets/images/bottom-left.png">
-                    </div>
-
-                </el-col>
                 <el-col :span="24">
                     <div>
-                        <div id="form-title">FasterRunner</div>
+                        <div id="form-title">ApiMange 测试平台</div>
                         <form id="submit-form">
                             <div id="form-content">
                                 <div id="form-msg">登录账号</div>
@@ -56,11 +49,6 @@
                     </div>
 
                 </el-col>
-                <el-col :span="7">
-                    <div class="bottom-right">
-                        <img src="~@/assets/images/bottom-right.png">
-                    </div>
-                </el-col>
             </el-row>
 
         </el-main>
@@ -69,7 +57,6 @@
 </template>
 
 <script>
-
     export default {
         name: "Login",
 
@@ -100,13 +87,13 @@
                 return true;
             },
             handleLoginSuccess(resp) {
-                if (resp.success) {
+                if (resp.code==0) {
                     this.$router.push({name: 'ProjectList'});
                     this.$store.commit("isLogin", resp.token);
-                    this.$store.commit("setUser", resp.user);
+                    this.$store.commit("setUser", resp.username);
                     this.$store.commit("setRouterName",'ProjectList');
                     this.setLocalValue("token", resp.token);
-                    this.setLocalValue("user", resp.user);
+                    this.setLocalValue("user", resp.username);
                     this.setLocalValue("routerName", 'ProjectList');
                 } else {
                     this.$message.error({

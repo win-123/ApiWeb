@@ -2,13 +2,13 @@
     <div>
         <div class="nav-header">
 
-            <span style="color: white; font-size: 25px; margin-left: 10px">FasterRunner 接口自动化测试平台</span>
+            <span style="color: white; font-size: 25px; margin-left: 10px">ApiMange 测试平台</span>
             <span class="right">
                 <div style="float: right; color: #d9d9d9; margin-right: 100px">
 
                     <i class="iconfont">&#xe61c;</i>
 
-                    <span v-text="this.$store.state.user" style="padding-left: 5px; font-size: large"></span>
+                    <span v-text="this.$store.state.username" style="padding-left: 5px; font-size: large"></span>
                     <a style="padding-left: 10px;" @click="handleLogOut">注 销</a>
                 </div>
             </span>

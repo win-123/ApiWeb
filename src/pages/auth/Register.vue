@@ -14,15 +14,9 @@
         </el-header>
         <el-main style="padding: 0px">
             <el-row>
-                <el-col :span="7">
-                    <div class="bottom-left">
-                        <img src="~@/assets/images/bottom-left.png">
-                    </div>
-
-                </el-col>
                 <el-col :span="24">
                     <div>
-                        <div id="form-title">FasterRunner</div>
+                        <div id="form-title">ApiMange 测试平台</div>
                         <form id="submit-form">
                             <div id="form-content">
                                 <div id="form-msg">注册账号</div>
@@ -72,11 +66,6 @@
 
                     </div>
 
-                </el-col>
-                <el-col :span="7">
-                    <div class="bottom-right">
-                        <img src="~@/assets/images/bottom-right.png">
-                    </div>
                 </el-col>
             </el-row>
 

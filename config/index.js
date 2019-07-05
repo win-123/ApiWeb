@@ -11,13 +11,13 @@ module.exports = {
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
         proxyTable: {
-           /* '/httprunner': {
-                target: 'http://localhost:8000',//设置你调用的接口域名和端口号 别忘了加http
+            '/api': {
+                target: 'http://127.0.0.1:5000',
                 changeOrigin: true,
                 pathRewrite: {
-                    '^/httprunner': ''
+                    '/api': '/api'
                 }
-            }*/
+            },
         },
 
         // Various Dev Server settings
