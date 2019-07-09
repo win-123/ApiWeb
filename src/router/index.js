@@ -65,7 +65,7 @@ export default new Router({
                 },
                 {
                     name: 'ProjectDetail',
-                    path: 'project/:id/dashbord',
+                    path: 'project/:id',
                     component: ProjectDetail,
                     meta: {
                         title: '项目预览',

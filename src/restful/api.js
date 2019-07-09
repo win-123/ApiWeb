@@ -27,7 +27,7 @@ axios.interceptors.request.use(
         if (config.url.indexOf("/project/?cursor=") !== -1) {
         }
         else if (!config.url.startsWith("/user/")) {
-            config.url = config.url + "?token=" + store.token;
+            config.url = config.url + "?token=" + window.localStorage.getItem("token");
         }
         return config;
     }, error => {
@@ -93,7 +93,7 @@ export const updateProject = params => {
 
 
 export const getProjectDetail = pk => {
-    return axios.get('/project/' + pk + '/').then(res => res.data)
+    return axios.get('/project/?pk=pk').then(res => res.data)
 };  // 获取项目详情
 
 export const getPagination = url => {

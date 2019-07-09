@@ -89,11 +89,11 @@
             handleLoginSuccess(resp) {
                 if (resp.code==0) {
                     this.$router.push({name: 'ProjectList'});
-                    this.$store.commit("isLogin", resp.token);
-                    this.$store.commit("setUser", resp.username);
+                    this.$store.commit("isLogin", resp.data.token);
+                    this.$store.commit("setUser", resp.data.username);
                     this.$store.commit("setRouterName",'ProjectList');
-                    this.setLocalValue("token", resp.token);
-                    this.setLocalValue("user", resp.username);
+                    this.setLocalValue("token", resp.data.token);
+                    this.setLocalValue("username", resp.data.username);
                     this.setLocalValue("routerName", 'ProjectList');
                 } else {
                     this.$message.error({

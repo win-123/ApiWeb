@@ -63,10 +63,10 @@
             <el-main style="padding: 0; margin-left: 10px">
                 <el-table
                     highlight-current-row
-                    :data="projectData.results"
+                    :data="projectData.data"
                     border
                     stripe
-                    :show-header="projectData.results.length > 0"
+                    :show-header="projectData.data.length > 0"
                     highlight-current-row
                     style="width: 100%;"
                 >
@@ -180,7 +180,7 @@
                 projectForm: {
                     name: '',
                     desc: '',
-                    responsible: this.$store.state.user,
+                    responsible: this.$store.state.username,
                     id: ''
                 },
                 rules: {
@@ -274,6 +274,7 @@
             getProjectList() {
                 this.$api.getProjectList().then(resp => {
                     this.projectData = resp;
+                    console.log(343434, this.projectData.data)
                 })
             },
             getPagination(url) {

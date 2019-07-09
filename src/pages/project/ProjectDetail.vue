@@ -47,7 +47,7 @@
                 <p class="desc-p">测试报告总数</p>
             </li>
 
-          
+
         </ul>
 
 
@@ -55,6 +55,7 @@
 </template>
 
 <script>
+    import { getProjectDetail} from '@/restful/api'
     export default {
         name: "ProjectDetail",
         data() {
@@ -79,7 +80,9 @@
 
             getProjectDetail() {
                 const pk = this.$route.params.id;
+                console.log(676767676, this.$api.getProjectDetail({pk:this.$route.params.id}))
                 this.$api.getProjectDetail(pk).then(res => {
+                    console.log(4545454, res)
                     this.projectInfo = res
                 })
             }
