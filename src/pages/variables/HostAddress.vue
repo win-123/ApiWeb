@@ -11,7 +11,6 @@
                         @click="dialogVisible=true"
                     >新增环境
                     </el-button>
-
                     <el-dialog
                         title="添加环境"
                         :visible.sync="dialogVisible"
@@ -103,8 +102,8 @@
                     <div style="position: fixed; bottom: 0; right:0; left: 220px; top: 150px">
                         <el-table
                             highlight-current-row
-                            :data="hostIPData.results"
-                            :show-header="hostIPData.results.length !== 0 "
+                            :data="hostIPData.data"
+                            :show-header="hostIPData.data.length !== 0 "
                             stripe
                             height="calc(100%)"
                             @cell-mouse-enter="cellMouseEnter"
@@ -148,7 +147,7 @@
                                             type="info"
                                             icon="el-icon-edit"
                                             circle size="mini"
-                                            @click="handleEditHostIP(scope.row)"
+                                            @click="handleEditHostIP(scope.$index, scope.row)"
                                         ></el-button>
 
 
@@ -157,7 +156,7 @@
                                             type="danger"
                                             icon="el-icon-delete"
                                             circle size="mini"
-                                            @click="handleDelHost(scope.row.id)"
+                                            @click="handleDelHost(scope.$index, scope.row)"
                                         >
                                         </el-button>
                                     </el-row>
@@ -175,7 +174,7 @@
 </template>
 
 <script>
-
+    import { updateHost, hostList, addHostIP, deleteHost} from '@/restful/api'
     export default {
 
         data() {
@@ -184,15 +183,15 @@
                 currentRow: '',
                 currentPage: 1,
                 hostIPData: {
-                    count: 0,
-                    results: []
+                    result: []
                 },
                 editdialogVisible: false,
                 dialogVisible: false,
                 variablesForm: {
                     name: '',
                     value: '',
-                    project: this.$route.params.id
+                    project: this.$route.params.id,
+                    id: ''
                 },
 
                 editVariablesForm: {
@@ -221,24 +220,27 @@
                 this.currentRow = '';
             },
 
-            handleEditHostIP(row) {
-                this.editVariablesForm = {
-                    name: row.name,
-                    value: row.value,
-                    id: row.id
-                };
-
+            handleEditHostIP(index, row) {
+                // this.editVariablesForm = {
+                //     name: row.name,
+                //     value: row.value,
+                //     id: row.id
+                // };
                 this.editdialogVisible = true;
+
+                this.editVariablesForm.name = row['name'];
+                this.editVariablesForm.value = row['value'];
+                this.editVariablesForm.id = row['id'];
             },
 
-            handleDelHost(index) {
+            handleDelHost(index, row) {
                 this.$confirm('此操作将永久删除该域名，是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning',
                 }).then(() => {
-                    this.$api.deleteHost(index).then(resp => {
-                        if (resp.success) {
+                    deleteHost({data: {"id": row['id']}}).then(resp => {
+                        if (resp.code = 0) {
                             this.getHostIPList();
                         } else {
                             this.$message.error(resp.msg);
@@ -263,7 +265,7 @@
                     if (valid) {
                         this.dialogVisible = false;
                         this.$api.addHostIP(this.variablesForm).then(resp => {
-                            if (!resp.success) {
+                            if (resp.code != 0) {
                                 this.$message.info({
                                     message: resp.msg,
                                     duration: 1000
@@ -284,8 +286,11 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.editdialogVisible = false;
-                        this.$api.updateHost(this.editVariablesForm.id, this.editVariablesForm).then(resp => {
-                            if (!resp.success) {
+                        updateHost({
+                            project_id: this.$route.params.id,
+                            hostData:this.editVariablesForm
+                        }).then(resp => {
+                            if (resp.code != 0) {
                                 this.$message.info({
                                     message: resp.msg,
                                     duration: 1000
@@ -300,7 +305,7 @@
             },
 
             getHostIPList() {
-                this.$api.hostList({
+                hostList({
                     params: {
                         project: this.variablesForm.project
                     }

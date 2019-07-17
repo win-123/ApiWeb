@@ -88,28 +88,29 @@ export const deleteProject = config => {
 }; // 删除项目
 
 export const updateProject = params => {
-    return axios.patch('/project/', params).then(res => res.data)
+    return axios.patch('/project/', params, false).then(res => res.data)
 };  //  更新项目
 
 
-export const getProjectDetail = pk => {
-    return axios.get('/project/?pk=pk').then(res => res.data)
+export const getProjectDetail = params => {
+    return axios.get('/pro_detail/', params).then(res => res.data)
 };  // 获取项目详情
 
-export const getPagination = url => {
-    return axios.get(url).then(res => res.data)
-};  // 分页
+// export const getPagination = url => {
+//     return axios.get(url).then(res => res.data)
+// };  // 分页
 
 
 // debug 操作
-export const getDebugtalk = url => {
-    return axios.get('/debugtalk/' + url + '/').then(res => res.data)
+export const getDebugtalk = params => {
+    return axios.get('/debugtalk/', params).then(res => res.data)
 };
 
 export const updateDebugtalk = params => {
     return axios.patch('/debugtalk/', params).then(res => res.data)
 };
 
+// 该接口未调
 export const runDebugtalk = params => {
     return axios.post('/debugtalk/', params).then(res => res.data)
 };
@@ -159,9 +160,9 @@ export const getAPISingle = url => {
 };
 
 // 分页获取
-export const getPaginationBypage = params => {
-    return axios.get('/api/', params).then(res => res.data)
-};
+// export const getPaginationBypage = params => {
+//     return axios.get('/api/', params).then(res => res.data)
+// };
 
 // 测试套件
 export const addTestCase = params => {
@@ -186,7 +187,7 @@ export const delAllTest = params => {
     return axios.delete('/case/', params).then(res => res.data)
 };
 
-export const coptTest = (url, params) => {
+export const copyTest = (url, params) => {
     return axios.post('/case/' + url + '/', params).then(res => res.data)
 };
 
@@ -205,8 +206,8 @@ export const addConfig = params => {
     return axios.post('/config/', params).then(res => res.data)
 };
 
-export const updateConfig = (url, params) => {
-    return axios.patch('/config/' + url + '/', params).then(res => res.data)
+export const updateConfig = params => {
+    return axios.patch('/config/', params).then(res => res.data)
 };
 
 
@@ -214,25 +215,25 @@ export const configList = params => {
     return axios.get('/config/', params).then(res => res.data)
 };
 
-export const copyConfig = (url, params) => {
-    return axios.post('/config/' + url + '/', params).then(res => res.data)
-};
+// export const copyConfig = (url, params) => {
+//     return axios.post('/config/' + url + '/', params).then(res => res.data)
+// };
 
-export const deleteConfig = url => {
-    return axios.delete('/config/' + url + '/').then(res => res.data)
+export const deleteConfig = params => {
+    return axios.delete('/config/', params).then(res => res.data)
 };
 
 export const delAllConfig = params => {
     return axios.delete('/config/', params).then(res => res.data)
 };
 
-export const getConfigPaginationBypage = params => {
-    return axios.get('/config/', params).then(res => res.data)
-};
+// export const getConfigPaginationBypage = params => {
+//     return axios.get('/config/', params).then(res => res.data)
+// };
 
-export const getAllConfig = url => {
-    return axios.get('/config/' + url + '/').then(res => res.data)
-};
+// export const getAllConfig = url => {
+//     return axios.get('/config/' + url + '/').then(res => res.data)
+// };
 
 
 // API执行操作
@@ -275,22 +276,22 @@ export const variablesList = params => {
     return axios.get('/variables/', params).then(res => res.data)
 };
 
-export const getVariablesPaginationBypage = params => {
-    return axios.get('/variables/', params).then(res => res.data)
+// export const getVariablesPaginationBypage = params => {
+//     return axios.get('/variables/', params).then(res => res.data)
+// };
+
+
+export const updateVariables = params => {
+    return axios.patch('/variables/', params).then(res => res.data)
 };
 
-
-export const updateVariables = (url, params) => {
-    return axios.patch('/variables/' + url + '/', params).then(res => res.data)
-};
-
-export const deleteVariables = url => {
-    return axios.delete('/variables/' + url + '/').then(res => res.data)
-};
-
-export const delAllVariabels = params => {
+export const deleteVariables = params => {
     return axios.delete('/variables/', params).then(res => res.data)
 };
+
+// export const delAllVariabels = params => {
+//     return axios.delete('/variables/', params).then(res => res.data)
+// };
 
 // 报告配置
 export const reportList = params => {
@@ -340,12 +341,12 @@ export const hostList = params => {
     return axios.get('/host_ip/', params).then(res => res.data)
 };
 
-export const updateHost = (url, params) => {
-    return axios.patch('/host_ip/' + url + '/', params).then(res => res.data)
+export const updateHost = params => {
+    return axios.patch('/host_ip/', params, false).then(res => res.data)
 };
 
-export const deleteHost = url => {
-    return axios.delete('/host_ip/' + url + '/').then(res => res.data)
+export const deleteHost = params => {
+    return axios.delete('/host_ip/', params).then(res => res.data)
 };
 
 export const getHostPaginationBypage = params => {

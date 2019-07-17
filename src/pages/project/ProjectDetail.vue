@@ -78,17 +78,19 @@
                 });
             },
 
-            getProjectDetail() {
-                const pk = this.$route.params.id;
-                console.log(676767676, this.$api.getProjectDetail({pk:this.$route.params.id}))
-                this.$api.getProjectDetail(pk).then(res => {
-                    console.log(4545454, res)
+            getDetail() {
+                let params = {
+                    project_id:this.$route.params.id
+                };
+                getProjectDetail({
+                    params: params
+                }).then(res => {
                     this.projectInfo = res
                 })
             }
         },
         mounted() {
-            this.getProjectDetail();
+            this.getDetail();
         }
     }
 </script>

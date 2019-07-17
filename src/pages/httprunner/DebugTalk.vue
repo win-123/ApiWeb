@@ -73,6 +73,7 @@
 </template>
 
 <script>
+    import { getDebugtalk, updateDebugtalk, runDebugtalk} from '@/restful/api'
     export default {
         data() {
             return {
@@ -96,7 +97,10 @@
             },
 
             handleConfirm() {
-                this.$api.updateDebugtalk(this.code).then(resp => {
+                updateDebugtalk({
+                    code:this.code,
+                    project_id:this.$route.params.id
+                }).then(resp => {
                     this.getDebugTalk();
                     this.$message.success("代码保存成功");
                 })
@@ -108,8 +112,13 @@
                 require('brace/snippets/python');
             },
             getDebugTalk() {
-                this.$api.getDebugtalk(this.$route.params.id).then(res => {
-                    this.code = res;
+                let params = {
+                    project_id:this.$route.params.id
+                };
+                getDebugtalk({
+                    params: params
+                }).then(res => {
+                    this.code = res.data;
                 })
             }
         },

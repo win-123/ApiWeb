@@ -274,7 +274,6 @@
             getProjectList() {
                 this.$api.getProjectList().then(resp => {
                     this.projectData = resp;
-                    console.log(343434, this.projectData.data)
                 })
             },
             getPagination(url) {

@@ -29,8 +29,8 @@
                 <div style="position: fixed; bottom: 0; right:0; left: 220px; top: 150px">
                     <el-table
                         highlight-current-row
-                        :data="configData.results"
-                        :show-header="configData.results.length !== 0 "
+                        :data="configData.data"
+                        :show-header="configData.data.length !== 0 "
                         stripe
                         height="calc(100%)"
                         @cell-mouse-enter="cellMouseEnter"
@@ -81,14 +81,14 @@
                                         type="info"
                                         icon="el-icon-edit"
                                         circle size="mini"
-                                        @click="handleEditConfig(scope.row)"
+                                        @click="handleEditConfig(scope.$index, scope.row)"
                                     ></el-button>
 
                                     <el-button
                                         type="success"
                                         icon="el-icon-document"
                                         circle size="mini"
-                                        @click="handleCopyConfig(scope.row.id)"
+                                        @click="handleCopyConfig(scope.$index, scope.row.id)"
                                     >
                                     </el-button>
 
@@ -96,7 +96,7 @@
                                         type="danger"
                                         icon="el-icon-delete"
                                         circle size="mini"
-                                        @click="handleDelConfig(scope.row.id)"
+                                        @click="handleDelConfig(scope.$index, scope.row)"
                                     >
                                     </el-button>
                                 </el-row>
@@ -112,6 +112,8 @@
 </template>
 
 <script>
+    import { addConfig, updateConfig, configList, deleteConfig, delAllConfig} from '@/restful/api'
+
     export default {
         name: "ConfigList",
         props: {
@@ -128,7 +130,6 @@
                 currentRow: '',
                 currentPage: 1,
                 configData: {
-                    count: 0,
                     results: []
                 }
             }
@@ -145,7 +146,7 @@
                         cancelButtonText: '取消',
                         type: 'warning',
                     }).then(() => {
-                        this.$api.delAllConfig({data: this.selectConfig}).then(resp => {
+                        delAllConfig({data: this.selectConfig}).then(resp => {
                             this.getConfigList();
                         })
                     })
@@ -177,14 +178,14 @@
             },
 
             //删除api
-            handleDelConfig(index) {
+            handleDelConfig(index, row) {
                 this.$confirm('此操作将永久删除该配置，是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning',
                 }).then(() => {
-                    this.$api.deleteConfig(index).then(resp => {
-                        if (resp.success) {
+                    deleteConfig({data: {"id": row.id}}).then(resp => {
+                        if (resp.code = 0) {
                             this.getConfigList();
                         } else {
                             this.$message.error(resp.msg);
@@ -193,7 +194,7 @@
                 })
             },
 
-            handleEditConfig(row) {
+            handleEditConfig(index, row) {
                 this.$emit('respConfig', row);
             },
 
@@ -206,7 +207,7 @@
                     this.$api.copyConfig(id, {
                         'name': value
                     }).then(resp => {
-                        if (resp.success) {
+                        if (resp.code = 0) {
                             this.getConfigList();
                         } else {
                             this.$message.error(resp.msg);
@@ -224,7 +225,7 @@
             },
 
             getConfigList() {
-                this.$api.configList({
+                configList({
                     params: {
                         project: this.project,
                         search: this.search

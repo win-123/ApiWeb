@@ -106,8 +106,8 @@
                     <div style="position: fixed; bottom: 0; right:0; left: 220px; top: 150px">
                         <el-table
                             highlight-current-row
-                            :data="variablesData.results"
-                            :show-header="variablesData.results.length !== 0 "
+                            :data="variablesData.data"
+                            :show-header="variablesData.data.length != 0"
                             stripe
                             height="calc(100%)"
                             @cell-mouse-enter="cellMouseEnter"
@@ -153,7 +153,7 @@
                                             type="info"
                                             icon="el-icon-edit"
                                             circle size="mini"
-                                            @click="handleEditVariables(scope.row)"
+                                            @click="handleEditVariables(scope.$index, scope.row)"
                                         ></el-button>
 
 
@@ -162,7 +162,7 @@
                                             type="danger"
                                             icon="el-icon-delete"
                                             circle size="mini"
-                                            @click="handleDelVariables(scope.row.id)"
+                                            @click="handleDelVariables(scope.$index, scope.row)"
                                         >
                                         </el-button>
                                     </el-row>
@@ -180,6 +180,7 @@
 </template>
 
 <script>
+    import { variablesList, updateVariables, addVariables, deleteVariables} from '@/restful/api'
 
     export default {
 
@@ -190,9 +191,8 @@
                 selectVariables: [],
                 currentRow: '',
                 currentPage: 1,
-                variablesData: {
-                    count: 0,
-                    results: []
+                variablesData:{
+                    result: []
                 },
                 editdialogVisible: false,
                 dialogVisible: false,
@@ -229,24 +229,28 @@
                 this.currentRow = '';
             },
 
-            handleEditVariables(row) {
-                this.editVariablesForm = {
-                    key: row.key,
-                    value: row.value,
-                    id: row.id
-                };
+            handleEditVariables(index, row) {
+                // this.editVariablesForm = {
+                //     key: row.key,
+                //     value: row.value,
+                //     id: row.id
+                // };
 
                 this.editdialogVisible = true;
+
+                this.editVariablesForm.key = row['key'];
+                this.editVariablesForm.value = row['value'];
+                this.editVariablesForm.id = row['id'];
             },
 
-            handleDelVariables(index) {
+            handleDelVariables(index, row) {
                 this.$confirm('此操作将永久删除该全局变量，是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning',
                 }).then(() => {
-                    this.$api.deleteVariables(index).then(resp => {
-                        if (resp.success) {
+                    deleteVariables({data: {"id": row['id']}}).then(resp => {
+                        if (resp.code = 0) {
                             this.getVariablesList();
                         } else {
                             this.$message.error(resp.msg);
@@ -276,7 +280,7 @@
                         cancelButtonText: '取消',
                         type: 'warning',
                     }).then(() => {
-                        this.$api.delAllVariabels({data: this.selectVariables}).then(resp => {
+                        delAllVariabels({data: {"id": row['id']}}).then(resp => {
                             this.getVariablesList();
                         })
                     })
@@ -294,7 +298,7 @@
                     if (valid) {
                         this.dialogVisible = false;
                         this.$api.addVariables(this.variablesForm).then(resp => {
-                            if (!resp.success) {
+                            if (resp.code != 0) {
                                 this.$message.info({
                                     message: resp.msg,
                                     duration: 1000
@@ -315,8 +319,11 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.editdialogVisible = false;
-                        this.$api.updateVariables(this.editVariablesForm.id, this.editVariablesForm).then(resp => {
-                            if (!resp.success) {
+                        updateVariables({
+                            project_id: this.$route.params.id,
+                            variableData:this.editVariablesForm
+                        }).then(resp => {
+                            if (resp.code != 0) {
                                 this.$message.info({
                                     message: resp.msg,
                                     duration: 1000
