@@ -2,9 +2,8 @@
     <el-container>
         <el-header style="padding: 0; height: 50px; margin-top: 10px">
             <div style="padding-top: 8px; padding-left: 30px;">
-
                 <el-row>
-                    <el-col :span="6" v-if="reportData.count > 11">
+                    <el-col :span="6" v-if="reportData.data.length >= 1">
                         <el-input placeholder="请输入报告名称" clearable v-model="search">
                             <el-button slot="append" icon="el-icon-search" @click="getReportList"></el-button>
                         </el-input>
@@ -12,7 +11,7 @@
 
                     <el-col :span="1">
                         <el-button
-                            v-show="reportData.count !== 0"
+                            v-show="reportData.data.length !== 0"
                             style="margin-left: 20px"
                             type="danger"
                             icon="el-icon-delete"
@@ -25,12 +24,12 @@
                     <el-col :span="7">
                         <el-pagination
                             :page-size="11"
-                            v-show="reportData.count !== 0 "
+                            v-show="reportData.data.length !== 0 "
                             background
                             @current-change="handleCurrentChange"
                             :current-page.sync="currentPage"
                             layout="total, prev, pager, next, jumper"
-                            :total="reportData.count"
+                            :total="reportData.data.length"
                         >
                         </el-pagination>
                     </el-col>
@@ -46,8 +45,8 @@
                 <div style="position: fixed; bottom: 0; right:0; left: 220px; top: 120px">
                     <el-table
                         highlight-current-row
-                        :data="reportData.results"
-                        :show-header="reportData.results.length !== 0 "
+                        :data="reportData.data"
+                        :show-header="reportData.data.length !== 0 "
                         stripe
                         height="calc(100%)"
                         @cell-mouse-enter="cellMouseEnter"
@@ -65,7 +64,7 @@
                             width="100"
                         >
                             <template slot-scope="scope">
-                                <el-tag color="#2C3E50" style="color: white">{{ scope.row.type }}</el-tag>
+                                <el-tag color="#2C3E50" style="color: white">{{scope.row.type}}</el-tag>
                             </template>
                         </el-table-column>
 
@@ -89,82 +88,85 @@
                         </el-table-column>
 
 
-                        <el-table-column
-                            label="测试时间"
-                        >
-                            <template slot-scope="scope">
-                                <div>{{scope.row.time.start_at|timestampToTime}}</div>
+                        <!--<el-table-column-->
+                            <!--label="测试时间"-->
+                        <!--&gt;-->
+                            <!--<template slot-scope="scope">-->
+                                <!--<div>{{eval(scope.row.summary)}}</div>-->
+                                <!--&lt;!&ndash;<div>{{scope.row.time.start_at|timestampToTime}}</div>&ndash;&gt;-->
 
-                            </template>
-                        </el-table-column>
+                            <!--</template>-->
+                        <!--</el-table-column>-->
 
-                        <el-table-column
-                            label="持续时间"
-                        >
-                            <template slot-scope="scope">
-                                <div v-text="scope.row.time.duration.toFixed(3)+' 秒'"></div>
+                        <!--<el-table-column-->
+                            <!--label="持续时间"-->
+                        <!--&gt;-->
+                            <!--<template slot-scope="scope">-->
+                                <!--<div>{{scope.row.time}}</div>-->
+                                <!--&lt;!&ndash;<div v-text="scope.row.time.duration.toFixed(3)+' 秒'"></div>&ndash;&gt;-->
 
-                            </template>
-                        </el-table-column>
+                            <!--</template>-->
+                        <!--</el-table-column>-->
 
-                        <el-table-column
-                            width="80"
-                            label="总计接口"
-                        >
-                            <template slot-scope="scope">
-                                <el-tag>{{ scope.row.stat.testsRun }}</el-tag>
-                            </template>
-                        </el-table-column>
+                        <!--<el-table-column-->
+                            <!--width="80"-->
+                            <!--label="总计接口"-->
+                        <!--&gt;-->
+                            <!--<template slot-scope="scope">-->
+                                <!--<el-tag>{{scope}}</el-tag>-->
+                                <!--&lt;!&ndash; <el-tag>{{ scope.row.stat.testsRun }}</el-tag> &ndash;&gt;-->
+                            <!--</template>-->
+                        <!--</el-table-column>-->
 
-                        <el-table-column
-                            width="80"
-                            label="通过个数"
-                        >
-                            <template slot-scope="scope">
-                                <el-tag type="success"> {{ scope.row.stat.successes }}</el-tag>
-                            </template>
-                        </el-table-column>
+                        <!--<el-table-column-->
+                            <!--width="80"-->
+                            <!--label="通过个数"-->
+                        <!--&gt;-->
+                            <!--<template slot-scope="scope">-->
+                                <!--<el-tag type="success"> {{ scope.row.stat.successes }}</el-tag>-->
+                            <!--</template>-->
+                        <!--</el-table-column>-->
 
-                        <el-table-column
-                            width="80"
-                            label="失败个数"
-                        >
-                            <template slot-scope="scope">
-                                <el-tag type="danger">{{ scope.row.stat.failures }}</el-tag>
-                            </template>
-                        </el-table-column>
+                        <!--<el-table-column-->
+                            <!--width="80"-->
+                            <!--label="失败个数"-->
+                        <!--&gt;-->
+                            <!--<template slot-scope="scope">-->
+                                <!--<el-tag type="danger">{{ scope.row.stat.failures }}</el-tag>-->
+                            <!--</template>-->
+                        <!--</el-table-column>-->
 
-                        <el-table-column
-                            width="80"
-                            label="异常个数"
-                        >
-                            <template slot-scope="scope">
-                                <el-tag type="warning">{{ scope.row.stat.errors }}</el-tag>
-                            </template>
-                        </el-table-column>
+                        <!--<el-table-column-->
+                            <!--width="80"-->
+                            <!--label="异常个数"-->
+                        <!--&gt;-->
+                            <!--<template slot-scope="scope">-->
+                                <!--<el-tag type="warning">{{ scope.row.stat.errors }}</el-tag>-->
+                            <!--</template>-->
+                        <!--</el-table-column>-->
 
-                        <el-table-column
-                            width="80"
-                            label="跳过个数"
-                        >
-                            <template slot-scope="scope">
-                                <el-tag type="info">{{ scope.row.stat.skipped }}</el-tag>
-                            </template>
-                        </el-table-column>
+                        <!--<el-table-column-->
+                            <!--width="80"-->
+                            <!--label="跳过个数"-->
+                        <!--&gt;-->
+                            <!--<template slot-scope="scope">-->
+                                <!--<el-tag type="info">{{ scope.row.stat.skipped }}</el-tag>-->
+                            <!--</template>-->
+                        <!--</el-table-column>-->
 
-                        <el-table-column
-                            label="系统信息"
-                        >
-                            <template slot-scope="scope">
-                                <el-popover trigger="hover" placement="top">
-                                    <p>HttpRunner: {{ scope.row.platform.httprunner_version }}</p>
-                                    <p>Platform: {{ scope.row.platform.platform }}</p>
-                                    <div slot="reference" class="name-wrapper">
-                                        <el-tag size="medium">{{ scope.row.platform.python_version }}</el-tag>
-                                    </div>
-                                </el-popover>
-                            </template>
-                        </el-table-column>
+                        <!--<el-table-column-->
+                            <!--label="系统信息"-->
+                        <!--&gt;-->
+                            <!--<template slot-scope="scope">-->
+                                <!--<el-popover trigger="hover" placement="top">-->
+                                    <!--<p>HttpRunner: {{ scope.row.platform.httprunner_version }}</p>-->
+                                    <!--<p>Platform: {{ scope.row.platform.platform }}</p>-->
+                                    <!--<div slot="reference" class="name-wrapper">-->
+                                        <!--<el-tag size="medium">{{ scope.row.platform.python_version }}</el-tag>-->
+                                    <!--</div>-->
+                                <!--</el-popover>-->
+                            <!--</template>-->
+                        <!--</el-table-column>-->
 
 
                         <el-table-column>
@@ -174,7 +176,7 @@
                                         type="info"
                                         icon="el-icon-view"
                                         circle size="mini"
-                                        @click="handleWatchReports(scope.row.id)"
+                                        @click="handleWatchReports(scope.$index, scope.row.id)"
                                     >
                                     </el-button>
 
@@ -182,7 +184,7 @@
                                         type="danger"
                                         icon="el-icon-delete"
                                         circle size="mini"
-                                        @click="handleDelReports(scope.row.id)"
+                                        @click="handleDelReports(scope.$index, scope.row.id)"
                                     >
                                     </el-button>
                                 </el-row>
@@ -199,7 +201,7 @@
 </template>
 
 <script>
-
+    import { reportList, deleteReports, delAllReports} from '@/restful/api'
     export default {
 
 
@@ -210,22 +212,25 @@
                 currentRow: '',
                 currentPage: 1,
                 reportData: {
-                    count: 0,
-                    results: []
-                }
+                    "results": {}
+                },
             }
         },
         methods: {
             cellMouseEnter(row) {
                 this.currentRow = row;
+                console.log(111111, this.currentRow)
             },
 
             cellMouseLeave(row) {
                 this.currentRow = '';
+                console.log(222222, this.currentRow)
+
+
             },
 
-            handleWatchReports(index) {
-                window.open(this.$api.baseUrl + "/api/fastrunner/reports/" + index + "/")
+            handleWatchReports(index, row) {
+                window.open(this.$api.baseUrl + "/api/reports/" + index + "/")
 
             },
 
@@ -247,7 +252,7 @@
                 })
             },
 
-            handleDelReports(index) {
+            handleDelReports(index, row) {
                 this.$confirm('此操作将永久删除该测试报告，是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -283,13 +288,16 @@
                 }
             },
             getReportList() {
-                this.$api.reportList({
+                reportList({
                     params: {
                         project: this.$route.params.id,
                         search: this.search
                     }
                 }).then(resp => {
                     this.reportData = resp;
+                    for(var i=0; i< this.reportData.data.length; i++){
+                        this.reportData["results"] = eval('('+ this.reportData.data[i].summary + ')');
+                    }
                 })
             },
         },

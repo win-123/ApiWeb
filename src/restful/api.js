@@ -76,15 +76,15 @@ export const login = params => {
 // 项目中用户行为相关配置
 
 export const getProjectList = params => {
-    return axios.get('/project/').then(res => res.data)
+    return axios.get('/project/', params).then(res => res.data)
 };  // 获取项目列表
 
 export const addProject = params => {
     return axios.post('/project/', params).then(res => res.data)
 };  // 添加项目
 
-export const deleteProject = config => {
-    return axios.delete('/project/', config).then(res => res.data)
+export const deleteProject = params => {
+    return axios.delete('/project/', params).then(res => res.data)
 }; // 删除项目
 
 export const updateProject = params => {
@@ -116,12 +116,12 @@ export const runDebugtalk = params => {
 };
 
 //  树形结构
-export const getTree = (url, params) => {
-    return axios.get('/tree/' + url + '/', params).then(res => res.data)
+export const getTree = params => {
+    return axios.get('/tree/', params).then(res => res.data)
 };
 
-export const updateTree = (url, params) => {
-    return axios.patch('/tree/' + url + '/', params).then(res => res.data)
+export const updateTree = params => {
+    return axios.patch('/tree/', params).then(res => res.data)
 };
 
 //  文件上传
@@ -135,42 +135,42 @@ export const addAPI = params => {
     return axios.post('/api/', params).then(res => res.data)
 };
 
-export const updateAPI = (url, params) => {
-    return axios.patch('/api/' + url + '/', params).then(res => res.data)
+export const updateAPI = params => {
+    return axios.patch('/api/', params).then(res => res.data)
 };
 
 export const apiList = params => {
     return axios.get('/api/', params).then(res => res.data)
 };
 
-export const delAPI = url => {
-    return axios.delete('/api/' + url + '/').then(res => res.data)
+export const delAPI = params => {
+    return axios.delete('/api/', params).then(res => res.data)
 };
 
-export const copyAPI = (url, params) => {
-    return axios.post('/api/' + url + '/', params).then(res => res.data)
+export const copyAPI = params => {
+    return axios.post('/api/', params).then(res => res.data)
 };
 
 export const delAllAPI = params => {
     return axios.delete('/api/', params).then(res => res.data)
 };
 
-export const getAPISingle = url => {
-    return axios.get('/api/' + url + '/').then(res => res.data)
+export const getAPISingle = params => {
+    return axios.get('/api/', params).then(res => res.data)
 };
 
 // 分页获取
-// export const getPaginationBypage = params => {
-//     return axios.get('/api/', params).then(res => res.data)
-// };
+export const getPaginationBypage = params => {
+    return axios.get('/api/', params).then(res => res.data)
+};
 
 // 测试套件
 export const addTestCase = params => {
     return axios.post('/test/', params).then(res => res.data)
 };
 
-export const updateTestCase = (url, params) => {
-    return axios.patch('/test/' + url + '/', params).then(res => res.data)
+export const updateTestCase = params => {
+    return axios.patch('/test/', params).then(res => res.data)
 };
 
 
@@ -179,21 +179,21 @@ export const testList = params => {
     return axios.get('/case/', params).then(res => res.data)
 };
 
-export const deleteTest = url => {
-    return axios.delete('/case/' + url + '/').then(res => res.data)
+export const deleteTest = params => {
+    return axios.delete('/case/', params).then(res => res.data)
 };
 
 export const delAllTest = params => {
     return axios.delete('/case/', params).then(res => res.data)
 };
 
-export const copyTest = (url, params) => {
-    return axios.post('/case/' + url + '/', params).then(res => res.data)
+export const copyTest = params => {
+    return axios.post('/case/', params).then(res => res.data)
 };
 
 
-export const editTest = url => {
-    return axios.get('/case_step/' + url + '/').then(res => res.data)
+export const editTest = params => {
+    return axios.get('/case_step/', params).then(res => res.data)
 };
 
 export const getTestPaginationBypage = params => {
@@ -215,9 +215,9 @@ export const configList = params => {
     return axios.get('/config/', params).then(res => res.data)
 };
 
-// export const copyConfig = (url, params) => {
-//     return axios.post('/config/' + url + '/', params).then(res => res.data)
-// };
+export const copyConfig = params => {
+    return axios.post('/config/', params).then(res => res.data)
+};
 
 export const deleteConfig = params => {
     return axios.delete('/config/', params).then(res => res.data)
@@ -227,13 +227,13 @@ export const delAllConfig = params => {
     return axios.delete('/config/', params).then(res => res.data)
 };
 
-// export const getConfigPaginationBypage = params => {
-//     return axios.get('/config/', params).then(res => res.data)
-// };
+export const getConfigPaginationBypage = params => {
+    return axios.get('/config/', params).then(res => res.data)
+};
 
-// export const getAllConfig = url => {
-//     return axios.get('/config/' + url + '/').then(res => res.data)
-// };
+export const getAllConfig = params => {
+    return axios.get('/config/', params).then(res => res.data)
+};
 
 
 // API执行操作
@@ -241,8 +241,8 @@ export const runSingleAPI = params => {
     return axios.post('/run_api/', params).then(res => res.data)
 };
 
-export const runAPIByPk = (url, params) => {
-    return axios.get('/run_api_pk/' + url + '/', params).then(res => res.data)
+export const runAPIByPk = params => {
+    return axios.get('/run_api_pk/', params).then(res => res.data)
 };
 
 export const runAPITree = params => {
@@ -259,8 +259,8 @@ export const runSingleTest = params => {
     return axios.post('/run_test/', params).then(res => res.data)
 };
 
-export const runTestByPk = (url, params) => {
-    return axios.get('/run_testsuite_pk/' + url + '/', params).then(res => res.data)
+export const runTestByPk = params => {
+    return axios.get('/run_testsuite_pk/', params).then(res => res.data)
 };
 
 export const runSuiteTree = params => {
@@ -276,9 +276,9 @@ export const variablesList = params => {
     return axios.get('/variables/', params).then(res => res.data)
 };
 
-// export const getVariablesPaginationBypage = params => {
-//     return axios.get('/variables/', params).then(res => res.data)
-// };
+export const getVariablesPaginationBypage = params => {
+    return axios.get('/variables/', params).then(res => res.data)
+};
 
 
 export const updateVariables = params => {
@@ -289,17 +289,17 @@ export const deleteVariables = params => {
     return axios.delete('/variables/', params).then(res => res.data)
 };
 
-// export const delAllVariabels = params => {
-//     return axios.delete('/variables/', params).then(res => res.data)
-// };
+export const delAllVariabels = params => {
+    return axios.delete('/variables/', params).then(res => res.data)
+};
 
 // 报告配置
 export const reportList = params => {
     return axios.get('/reports/', params).then(res => res.data)
 };
 
-export const deleteReports = url => {
-    return axios.delete('/reports/' + url + '/').then(res => res.data)
+export const deleteReports = params => {
+    return axios.delete('/reports/', params).then(res => res.data)
 };
 
 export const getReportsPaginationBypage = params => {
@@ -310,8 +310,8 @@ export const delAllReports = params => {
     return axios.delete('/reports/', params).then(res => res.data)
 };
 
-export const watchSingleReports = url => {
-    return axios.get('/reports/' + url + '/').then(res => res.data)
+export const watchSingleReports = params => {
+    return axios.get('/reports/', params).then(res => res.data)
 };
 
 //  任务配置
@@ -327,8 +327,8 @@ export const getTaskPaginationBypage = params => {
     return axios.get('/schedule/', params).then(res => res.data)
 };
 
-export const deleteTasks = url => {
-    return axios.delete('/schedule/' + url + '/').then(res => res.data)
+export const deleteTasks = params => {
+    return axios.delete('/schedule/', params).then(res => res.data)
 };
 
 
@@ -353,6 +353,6 @@ export const getHostPaginationBypage = params => {
     return axios.get('/host_ip/', params).then(res => res.data)
 };
 
-export const getAllHost = url => {
-    return axios.get('/host_ip/' + url + '/').then(res => res.data)
+export const getAllHost = params => {
+    return axios.get('/host_ip/', params).then(res => res.data)
 };

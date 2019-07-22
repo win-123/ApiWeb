@@ -3,7 +3,7 @@
         <el-header style="padding-top: 10px; height: 50px;">
             <div style="overflow: hidden">
                 <el-row :gutter="50">
-                    <el-col :span="6" v-if="testData.count > 11">
+                    <el-col :span="6" v-if="testData.data.length >= 1">
                         <el-input placeholder="请输入用例名称" clearable v-model="search">
                             <el-button slot="append" icon="el-icon-search" @click="getTestList"></el-button>
                         </el-input>
@@ -13,10 +13,10 @@
                             @current-change="handleCurrentChange"
                             :current-page.sync="currentPage"
                             :page-size="11"
-                            v-show="testData.count !== 0 "
+                            v-show="testData.data.length !== 0 "
                             background
                             layout="total, prev, pager, next, jumper"
-                            :total="testData.count"
+                            :total="testData.data.length"
                         >
                         </el-pagination>
                     </el-col>
@@ -88,10 +88,11 @@
                                     :highlight-current="true"
                                     ref="tree"
                                 >
-                            <span class="custom-tree-node"
-                                  slot-scope="{ node, data }"
-                            >
-                                <span><i class="iconfont" v-html="expand"></i>&nbsp;&nbsp;{{ node.label }}</span>
+                            <span class="custom-tree-node" slot-scope="{ node, data }">
+                                <span>
+                                    <i class="iconfont" v-html="expand"></i>&nbsp;&nbsp;
+                                    {{ node.label }}
+                                </span>
                             </span>
                                 </el-tree>
                             </div>
@@ -106,8 +107,8 @@
                         highlight-current-row
                         v-loading="loading"
                         ref="multipleTable"
-                        :data="testData.results"
-                        :show-header="testData.count !== 0 "
+                        :data="testData.data"
+                        :show-header="testData.data.length !== 0 "
                         stripe
                         height="calc(100%)"
                         @cell-mouse-enter="cellMouseEnter"
@@ -140,9 +141,12 @@
                             label="用例类型"
                         >
                             <template slot-scope="scope">
-                                <el-tag v-if="scope.row.tag==='冒烟用例'">{{scope.row.tag}}</el-tag>
-                                <el-tag v-if="scope.row.tag==='集成用例'" type="success">{{scope.row.tag}}</el-tag>
-                                <el-tag v-if="scope.row.tag==='监控脚本'" type="danger">{{scope.row.tag}}</el-tag>
+                                <el-tag v-if="scope.row.tag==='1'">{{scope.row.tag}}</el-tag>
+                                <el-tag v-if="scope.row.tag==='2'" type="success">{{scope.row.tag}}</el-tag>
+                                <el-tag v-if="scope.row.tag==='3'" type="danger">{{scope.row.tag}}</el-tag>
+                                <!--<el-tag v-if="scope.row.tag==='冒烟用例'">{{scope.row.tag}}</el-tag>-->
+                                <!--<el-tag v-if="scope.row.tag==='集成用例'" type="success">{{scope.row.tag}}</el-tag>-->
+                                <!--<el-tag v-if="scope.row.tag==='监控脚本'" type="danger">{{scope.row.tag}}</el-tag>-->
                             </template>
                         </el-table-column>
 
@@ -151,7 +155,7 @@
                             label="更新时间"
                         >
                             <template slot-scope="scope">
-                                <div>{{scope.row.update_time|datetimeFormat}}</div>
+                                <div>{{scope.row.update_time || date | formatDate}}</div>
 
                             </template>
                         </el-table-column>
@@ -284,6 +288,19 @@
                     results: []
                 },
                 currentPage: 1,
+                date: new Date(),
+            }
+        },
+        filters: {
+            formatDate:function (value) {
+                var date = new Date(value);
+                var year = date.getFullYear();
+                var month = date.getMonth()+1;
+                var day = date.getDate();
+                var hours = date.getHours();
+                var minutes = date.getMinutes();
+                var seconds = date.getSeconds();
+                return year + '-' + month + '-' + day + ' ' + ' ' + hours + ':' + minutes + ':' + seconds;
             }
         },
 

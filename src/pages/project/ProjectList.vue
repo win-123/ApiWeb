@@ -109,7 +109,7 @@
                         align="center"
                     >
                         <template slot-scope="scope">
-                            <span>{{ scope.row.update_time | datetimeFormat }}</span>
+                            <span>{{ scope.row.update_time || date | formatDate }}</span>
                         </template>
                     </el-table-column>
 
@@ -173,6 +173,7 @@
         data() {
             return {
                 dialogVisible: false,
+                date: new Date(),
                 editVisible: false,
                 projectData: {
                     results: []
@@ -193,6 +194,18 @@
                         {min: 1, max: 100, message: '最多不超过100个字符', trigger: 'blur'}
                     ]
                 }
+            }
+        },
+        filters: {
+            formatDate:function (value) {
+                var date = new Date(value);
+                var year = date.getFullYear();
+                var month = date.getMonth()+1;
+                var day = date.getDate();
+                var hours = date.getHours();
+                var minutes = date.getMinutes();
+                var seconds = date.getSeconds();
+                return year + '-' + month + '-' + day + ' ' + ' ' + hours + ':' + minutes + ':' + seconds;
             }
         },
         methods: {

@@ -1,5 +1,4 @@
 <template>
-
     <el-container>
         <el-header style="background: #fff; padding: 0; height: 50px">
             <div class="nav-api-header">
@@ -12,7 +11,7 @@
                     >新增配置
                     </el-button>
 
-                  <!--  <el-button
+                   <el-button
                         type="primary"
                         plain
                         size="small"
@@ -26,7 +25,7 @@
                         size="small"
                         icon="el-icon-download"
                     >导出配置
-                    </el-button>-->
+                    </el-button>
 
                     <el-button
                         style="margin-left: 20px"
@@ -77,6 +76,7 @@
     import ConfigList from './components/ConfigList'
 
     export default {
+        name: "RecordConfig",
         components: {
             ConfigBody,
             ConfigList
@@ -154,7 +154,6 @@
                 this.addConfigActivate = true;
             }
         },
-        name: "RecordConfig",
         mounted() {
 
         }

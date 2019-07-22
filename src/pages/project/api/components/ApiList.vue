@@ -5,14 +5,14 @@
                 <el-row :gutter="50">
                     <el-col :span="1">
                         <el-checkbox
-                            v-if="apiData.count > 0"
+                            v-if="apiData.data.length > 0"
                             v-model="checked"
                             style="padding-top: 14px; padding-left: 2px"
                         >
                         </el-checkbox>
                     </el-col>
 
-                    <el-col :span="6" v-if="apiData.count > 11">
+                    <el-col :span="6" v-if="apiData.data.length >= 1">
                         <el-input placeholder="请输入接口名称" clearable v-model="search">
                             <el-button slot="append" icon="el-icon-search" @click="getAPIList"></el-button>
                         </el-input>
@@ -22,12 +22,12 @@
                         <el-pagination
                             style="margin-top: 5px"
                             :page-size="11"
-                            v-show="apiData.count !== 0 "
+                            v-show="apiData.data.length !== 0 "
                             background
                             @current-change="handleCurrentChange"
                             :current-page.sync="currentPage"
                             layout="total, prev, pager, next, jumper"
-                            :total="apiData.count"
+                            :total="apiData.data.length"
                         >
                         </el-pagination>
                     </el-col>
@@ -97,10 +97,11 @@
                                 :highlight-current="true"
                                 ref="tree"
                             >
-                            <span class="custom-tree-node"
-                                  slot-scope="{ node, data }"
-                            >
-                                <span><i class="iconfont" v-html="expand"></i>&nbsp;&nbsp;{{ node.label }}</span>
+                            <span class="custom-tree-node" slot-scope="{ node, data }">
+                                <span>
+                                    <i class="iconfont" v-html="expand"></i>&nbsp;&nbsp;
+                                    {{ node.label }}
+                                </span>
                             </span>
                             </el-tree>
                         </div>
@@ -118,7 +119,7 @@
                         highlight-current-row
                         height="calc(100%)"
                         ref="multipleTable"
-                        :data="apiData.results"
+                        :data="apiData.data"
                         :show-header="false"
                         :cell-style="{paddingTop: '4px', paddingBottom: '4px'}"
                         @cell-mouse-enter="cellMouseEnter"
@@ -448,8 +449,9 @@
             // 运行API
             handleRunAPI(id) {
                 this.loading = true;
-                this.$api.runAPIByPk(id, {
+                this.$api.runAPIByPk({
                     params: {
+                        id: id,
                         host:this.host,
                         config: this.config
                     }

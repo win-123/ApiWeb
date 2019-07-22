@@ -135,7 +135,7 @@
                                 label="更新时间"
                             >
                                 <template slot-scope="scope">
-                                    <div>{{scope.row.update_time|datetimeFormat}}</div>
+                                    <div>{{scope.row.update_time || date | formatDate }}</div>
 
                                 </template>
                             </el-table-column>
@@ -179,6 +179,7 @@
 
         data() {
             return {
+                date: new Date(),
                 search: '',
                 currentRow: '',
                 currentPage: 1,
@@ -209,6 +210,18 @@
                         {required: true, message: '请输入变量值', trigger: 'blur'}
                     ]
                 }
+            }
+        },
+        filters: {
+            formatDate:function (value) {
+                var date = new Date(value);
+                var year = date.getFullYear();
+                var month = date.getMonth()+1;
+                var day = date.getDate();
+                var hours = date.getHours();
+                var minutes = date.getMinutes();
+                var seconds = date.getSeconds();
+                return year + '-' + month + '-' + day + ' ' + ' ' + hours + ':' + minutes + ':' + seconds;
             }
         },
         methods: {

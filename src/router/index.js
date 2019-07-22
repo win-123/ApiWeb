@@ -14,6 +14,7 @@ import RecordConfig from '@/pages/project/config/RecordConfig'
 import Tasks from '@/pages/task/Tasks'
 import HostAddress from '@/pages/variables/HostAddress'
 import Cover from '@/pages/cover/Cover'
+import Help from '@/pages/help/Help'
 
 Vue.use(Router);
 
@@ -149,6 +150,16 @@ export default new Router({
                     component: HostAddress,
                     meta: {
                         title: 'HOST配置',
+                        requireAuth: true
+                    }
+
+                },
+                {
+                    name: 'Help',
+                    path: 'help',
+                    component: Help,
+                    meta: {
+                        title: '小工具',
                         requireAuth: true
                     }
 

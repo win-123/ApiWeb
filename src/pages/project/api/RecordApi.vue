@@ -147,10 +147,11 @@
                             ref="tree2"
                             @node-drag-end="handleDragEnd"
                         >
-                            <span class="custom-tree-node"
-                                  slot-scope="{ node, data }"
-                            >
-                                <span><i class="iconfont" v-html="expand"></i>&nbsp;&nbsp;{{ node.label }}</span>
+                            <span class="custom-tree-node" slot-scope="{ node, data }">
+                                <span>
+                                    <i class="iconfont" v-html="expand"></i>&nbsp;&nbsp;
+                                    {{ node.label }}
+                                </span>
                             </span>
                         </el-tree>
                     </div>
@@ -294,7 +295,8 @@
                 filterText: '',
                 expand: '&#xe65f;',
                 dataTree: [],
-
+                treeData: [],
+                RelationData: {}
             }
         },
         methods: {
@@ -312,10 +314,21 @@
             },
 
             getTree() {
-                this.$api.getTree(this.$route.params.id, {params: {type: 1}}).then(resp => {
-                    this.dataTree = resp['tree'];
-                    this.treeId = resp['id'];
-                    this.maxId = resp['max'];
+                this.$api.getTree({
+                        params: {
+                            project: this.$route.params.id,
+                            type: 1
+                        }
+                    }).then(resp => {
+                    this.RelationData = resp;
+                    for(var i=0; i< this.RelationData.data.length; i++){
+                        this.dataTree = eval('('+ this.RelationData.data[i].tree+ ')');
+                        this.treeId = this.RelationData.data[i].id;
+                        this.maxId = this.RelationData.data[i].maxId;
+                        for(var j=0; j<this.dataTree.length; j++){
+                            this.treeData = this.dataTree[j]
+                        }
+                    }
                 })
             },
             getConfig() {
@@ -343,7 +356,7 @@
                     mode: mode,
                     type: 1
                 }).then(resp => {
-                    if (resp['success']) {
+                    if (resp.code = 0) {
                         this.dataTree = resp['tree'];
                         this.maxId = resp['max'];
                     } else {

@@ -133,10 +133,7 @@
         </el-header>
 
         <el-container>
-            <el-aside
-                style="margin-top: 10px;"
-                v-show="addTestActivate"
-            >
+            <el-aside style="margin-top: 10px;" v-show="addTestActivate">
                 <div class="nav-api-side">
                     <div class="api-tree">
                         <el-input
@@ -147,7 +144,6 @@
                             prefix-icon="el-icon-search"
                         >
                         </el-input>
-
                         <el-tree
                             @node-click="handleNodeClick"
                             :data="dataTree"
@@ -160,17 +156,15 @@
                             ref="tree2"
                             @node-drag-end="handleDragEnd"
                         >
-                            <span class="custom-tree-node"
-                                  slot-scope="{ node, data }"
-                            >
-                                <span><i class="iconfont" v-html="expand"></i>&nbsp;&nbsp;{{ node.label }}</span>
+                            <span class="custom-tree-node" slot-scope="{ node, data }">
+                                <span>
+                                    <i class="iconfont" v-html="expand"></i>&nbsp;&nbsp;
+                                    {{ node.label }}
+                                </span>
                             </span>
                         </el-tree>
-
                     </div>
                 </div>
-
-
             </el-aside>
 
             <el-main style="padding: 0;">
@@ -249,6 +243,7 @@
                 addTestActivate: true,
                 currentConfig: '请选择',
                 currentHost:'请选择',
+                RelationData: {},
                 treeId: '',
                 maxId: '',
                 dialogVisible: false,
@@ -257,6 +252,7 @@
                 filterText: '',
                 expand: '&#xe65f;',
                 dataTree: [],
+                treeData: [],
                 configOptions: []
             }
         },
@@ -283,10 +279,21 @@
                 this.addTestActivate = false;
             },
             getTree() {
-                this.$api.getTree(this.$route.params.id, {params: {type: 2}}).then(resp => {
-                    this.dataTree = resp['tree'];
-                    this.treeId = resp['id'];
-                    this.maxId = resp['max'];
+                this.$api.getTree({
+                    params: {
+                        project: this.$route.params.id,
+                        type: 2
+                    }
+                }).then(resp => {
+                    this.RelationData = resp;
+                    for(var i=0; i< this.RelationData.data.length; i++){
+                        this.dataTree = eval('('+ this.RelationData.data[i].tree+ ')');
+                        this.treeId = this.RelationData.data[i].id;
+                        this.maxId = this.RelationData.data[i].maxId;
+                        for(var j=0; j<this.dataTree.length; j++){
+                            this.treeData = this.dataTree[j]
+                        }
+                    }
                 })
             },
 
@@ -297,7 +304,7 @@
                     node: this.currentNode.id,
                     type: 2
                 }).then(resp => {
-                    if (resp['success']) {
+                    if (resp.code = 0) {
                         this.dataTree = resp['tree'];
                         this.maxId = resp['max'];
                     } else {
