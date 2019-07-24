@@ -126,7 +126,7 @@ export const updateTree = params => {
 
 //  文件上传
 export const uploadFile = url => {
-    return baseUrl + '/file/?token=' + store.token
+    return axios.defaults.baseURL + '/file/?token=' + store.token
 };
 
 

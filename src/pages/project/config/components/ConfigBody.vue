@@ -20,6 +20,7 @@
         </div>
         <div>
             <el-input
+                v-if="baseUrl"
                 class="input-with-select"
                 placeholder="请输入 base_url 地址"
                 v-model="baseUrl"

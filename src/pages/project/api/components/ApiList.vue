@@ -2,7 +2,7 @@
     <el-container>
         <el-header style="padding: 0; height: 50px;">
             <div style=" padding-left: 10px;">
-                <el-row :gutter="50">
+                <el-row :gutter="50" v-if="apiData.data">
                     <el-col :span="1">
                         <el-checkbox
                             v-if="apiData.data.length > 0"

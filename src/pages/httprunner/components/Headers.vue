@@ -77,12 +77,14 @@
         methods: {
             querySearch(queryString, cb) {
                 let headerOptions = this.headerOptions;
+                console.log(111111111, headerOptions)
                 let results = queryString ? headerOptions.filter(this.createFilter(queryString)) : headerOptions;
                 cb(results);
             },
 
             createFilter(queryString) {
                 return (headerOptions) => {
+                    console.log(3333333333, headerOptions)
                     return (headerOptions.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
                 };
             },

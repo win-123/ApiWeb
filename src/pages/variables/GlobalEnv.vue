@@ -1,6 +1,6 @@
 <template>
 
-    <el-container>
+    <el-container v-if="variablesData.data">
         <el-header style="background: #fff; padding: 0; height: 50px">
             <div class="nav-api-header">
                 <div style="padding-top: 10px; margin-left: 20px">
@@ -13,7 +13,7 @@
                     </el-button>
 
                     <el-button
-                        v-show="variablesData.count !== 0 "
+                        v-show="variablesData.data.length !== 0 "
                         style="margin-left: 20px"
                         type="danger"
                         icon="el-icon-delete"
@@ -81,19 +81,19 @@
                 <div style="padding-top: 8px; padding-left: 30px; overflow: hidden">
                     <el-row :gutter="50">
                         <el-col :span="6">
-                            <el-input placeholder="请输入变量名称" v-if="variablesData.count > 11" clearable v-model="search">
+                            <el-input placeholder="请输入变量名称" v-if="variablesData.data.length > 11" clearable v-model="search">
                                 <el-button slot="append" icon="el-icon-search" @click="getVariablesList"></el-button>
                             </el-input>
                         </el-col>
                         <el-col :span="7">
                             <el-pagination
                                 :page-size="11"
-                                v-show="variablesData.count !== 0 "
+                                v-show="variablesData.data.length !== 0 "
                                 background
                                 @current-change="handleCurrentChange"
                                 :current-page.sync="currentPage"
                                 layout="total, prev, pager, next, jumper"
-                                :total="variablesData.count"
+                                :total="variablesData.data.length"
                             >
                             </el-pagination>
                         </el-col>
@@ -141,7 +141,7 @@
                                 label="更新时间"
                             >
                                 <template slot-scope="scope">
-                                    <div>{{scope.row.update_time || date | formatDate }}</div>
+                                    <div>{{scope.row.update_time || date | datetimeFormat }}</div>
 
                                 </template>
                             </el-table-column>
@@ -158,7 +158,7 @@
 
 
                                         <el-button
-                                            v-show="variablesData.count !== 0"
+                                            v-show="variablesData.data.length !== 0"
                                             type="danger"
                                             icon="el-icon-delete"
                                             circle size="mini"
@@ -219,18 +219,6 @@
                         {min: 1, max: 1024, message: '最多不超过1024个字符', trigger: 'blur'}
                     ]
                 }
-            }
-        },
-        filters: {
-            formatDate:function (value) {
-                var date = new Date(value);
-                var year = date.getFullYear();
-                var month = date.getMonth()+1;
-                var day = date.getDate();
-                var hours = date.getHours();
-                var minutes = date.getMinutes();
-                var seconds = date.getSeconds();
-                return year + '-' + month + '-' + day + ' ' + ' ' + hours + ':' + minutes + ':' + seconds;
             }
         },
 

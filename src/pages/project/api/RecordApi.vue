@@ -77,7 +77,7 @@
                         v-model="currentHost"
                     >
                         <el-option
-                            v-for="item in hostOptions"
+                            v-for="item in hostOptions.data"
                             :key="item.id"
                             :label="item.name"
                             :value="item.name">
@@ -91,7 +91,7 @@
                         v-model="currentConfig"
                     >
                         <el-option
-                            v-for="item in configOptions"
+                            v-for="item in configOptions.data"
                             :key="item.id"
                             :label="item.name"
                             :value="item.name">
@@ -332,18 +332,26 @@
                 })
             },
             getConfig() {
-                this.$api.getAllConfig(this.$route.params.id).then(resp => {
+                this.$api.getAllConfig({
+                    params:{
+                        project: this.$route.params.id
+                    }
+                }).then(resp => {
                     this.configOptions = resp;
-                    this.configOptions.push({
+                    this.configOptions.data.push({
                         name: '请选择'
                     })
                 })
             },
 
             getHost() {
-                this.$api.getAllHost(this.$route.params.id).then(resp => {
+                this.$api.getAllHost({
+                    params: {
+                        project: this.$route.params.id
+                    }
+                }).then(resp => {
                     this.hostOptions = resp;
-                    this.hostOptions.push({
+                    this.hostOptions.data.push({
                         name: '请选择'
                     })
                 })

@@ -1,9 +1,9 @@
 <template>
-    <el-container>
+    <el-container   v-if="configData.data">
         <el-header style="padding-top: 10px; height: 50px;">
             <div>
                 <el-row :gutter="50">
-                    <el-col :span="6" v-if="configData.count > 11">
+                    <el-col :span="6" v-if="configData.data.length > 11">
                         <el-input placeholder="请输入配置名称" clearable v-model="search">
                             <el-button slot="append" icon="el-icon-search" @click="getConfigList"></el-button>
                         </el-input>
@@ -11,12 +11,12 @@
                     <el-col :span="7">
                         <el-pagination
                             :page-size="11"
-                            v-show="configData.count !== 0 "
+                            v-show="configData.data.length !== 0 "
                             background
                             @current-change="handleCurrentChange"
                             :current-page.sync="currentPage"
                             layout="total, prev, pager, next, jumper"
-                            :total="configData.count"
+                            :total="configData.data.length"
                         >
                         </el-pagination>
                     </el-col>
@@ -25,7 +25,7 @@
         </el-header>
 
         <el-container>
-            <el-main style="padding: 0; margin-left: 10px; margin-top: 10px;">
+            <el-main style="padding: 0; margin-left: 10px; margin-top: 20px;">
                 <div style="position: fixed; bottom: 0; right:0; left: 220px; top: 150px">
                     <el-table
                         highlight-current-row

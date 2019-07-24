@@ -263,7 +263,7 @@
             getConfig() {
                 this.$api.getAllConfig(this.$route.params.id).then(resp => {
                     this.configOptions = resp;
-                    this.configOptions.push({
+                    this.configOptions.data.push({
                         name: '请选择'
                     })
                 })
@@ -388,7 +388,7 @@
             getHost() {
                 this.$api.getAllHost(this.$route.params.id).then(resp => {
                     this.hostOptions = resp;
-                    this.hostOptions.push({
+                    this.hostOptions.data.push({
                         name: '请选择'
                     })
                 })

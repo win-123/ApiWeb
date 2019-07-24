@@ -21,19 +21,19 @@
                 </div>
             </div>
         </el-header>
+
         <el-main>
-            <!--<div style="position: relative; ">-->
-                <!--<img src="../../assets/images/59936.jpg" alt="" style="width: 100%; height: 100%">-->
-            <!--</div>-->
-            <el-row>
-                <el-col :span="24">
-                    <div>
-                        <img src="../../assets/images/59936.jpg" alt="" style="width: 100%">
 
-                    </div>
+            <el-carousel :interval="5000" arrow="always" height="600px">
+                <el-carousel-item v-for="(item, index) in swiperImg" :key="index">
+                    <img :src="item.url" alt="" class="img">
+                </el-carousel-item>
 
-                </el-col>
-            </el-row>
+            </el-carousel>
+
+            <el-footer height="100px" style="background: #3b4151">
+                <span>关注我么！</span>
+            </el-footer>
 
         </el-main>
     </el-container>
@@ -43,6 +43,17 @@
 <script>
     export default {
         name: "Cover",
+        data () {
+            return {
+                swiperImg:[
+                    {url: require("../../assets/images/1.jpg")},
+                    {url: require("../../assets/images/2.jpg")},
+                    {url: require("../../assets/images/3.jpg")},
+                    {url: require("../../assets/images/4.jpg")},
+                ]
+
+            }
+        },
         methods:{
             goLogin(){
                 this.$router.push({name: "Login"})
@@ -55,6 +66,27 @@
 </script>
 
 <style scoped>
+
+    .el-carousel__item {
+        color: #475669;
+        font-size: 18px;
+        opacity: 0.75;
+        line-height: 600px;
+        margin: 0;
+    }
+
+    .el-carousel__item:nth-child(2n) {
+        background-color: #99a9bf;
+    }
+
+    .el-carousel__item:nth-child(2n+1) {
+        background-color: #d3dce6;
+    }
+    .img {
+        width: 100%;
+        height: auto;
+    }
+
 
 </style>
 

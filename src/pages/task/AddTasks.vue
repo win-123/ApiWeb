@@ -90,12 +90,12 @@
                         <el-col :span="12">
                             <el-pagination
                                 :page-size="11"
-                                v-show="suiteData.count !== 0"
+                                v-show="suiteData.data.length !== 0"
                                 background
                                 @current-change="handlePageChange"
                                 :current-page.sync="currentPage"
                                 layout="total, prev, pager, next, jumper"
-                                :total="suiteData.count"
+                                :total="suiteData.data.length"
                                 style="text-align: center"
                             >
                             </el-pagination>
@@ -113,7 +113,7 @@
                     <el-row :gutter="20">
                         <el-col :span="12">
                             <div
-                                v-for="(item,index) in suiteData.results"
+                                v-for="(item,index) in suiteData.data"
                                 draggable='true'
                                 @dragstart="currentSuite = JSON.parse(JSON.stringify(item))"
                                 style="cursor: pointer; margin-top: 10px; overflow: auto"
@@ -300,8 +300,16 @@
                 return data.label.indexOf(value) !== -1;
             },
             getTree() {
-                this.$api.getTree(this.$route.params.id, {params: {type: 2}}).then(resp => {
-                    this.dataTree = resp.tree;
+                this.$api.getTree({
+                    params: {
+                        project: this.$route.params.id,
+                        type: 2
+                    }
+                }).then(resp => {
+                    this.RelationData = resp;
+                    for(var i=0; i< this.RelationData.data.length; i++){
+                        this.dataTree = eval('('+ this.RelationData.data[i].tree+ ')');
+                    }
                 })
             },
 

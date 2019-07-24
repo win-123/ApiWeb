@@ -1,6 +1,6 @@
 <template>
 
-    <el-container>
+    <el-container v-if="tasksData.data">
         <el-header style="background: #fff; padding: 0; height: 50px">
             <div class="nav-api-header">
                 <div style="padding-top: 10px; margin-left: 20px">
@@ -62,55 +62,55 @@
                         </el-table-column>
 
 
-                        <!--<el-table-column-->
-                            <!--width="120"-->
-                            <!--label="时间配置"-->
-                        <!--&gt;-->
-                            <!--<template slot-scope="scope">-->
-                                <!--<div>{{scope.row.kwargs.corntab}}</div>-->
-                            <!--</template>-->
-                        <!--</el-table-column>-->
+                        <el-table-column
+                            width="120"
+                            label="时间配置"
+                        >
+                            <template slot-scope="scope">
+                                <div>{{scope.row.config}}</div>
+                            </template>
+                        </el-table-column>
 
-                        <!--<el-table-column-->
-                            <!--width="100"-->
-                            <!--label="邮件策略"-->
-                        <!--&gt;-->
-                            <!--<template slot-scope="scope">-->
-                                <!--<div>{{scope.row.kwargs.strategy}}</div>-->
+                        <el-table-column
+                            width="100"
+                            label="邮件策略"
+                        >
+                            <template slot-scope="scope">
+                                <div>{{scope.row.send_type}}</div>
 
-                            <!--</template>-->
-                        <!--</el-table-column>-->
+                            </template>
+                        </el-table-column>
 
 
-                        <!--<el-table-column-->
-                            <!--width="80"-->
-                            <!--label="状态"-->
-                        <!--&gt;-->
-                            <!--<template slot-scope="scope">-->
-                                <!--<el-switch-->
-                                    <!--disabled-->
-                                    <!--v-model="scope.row.enabled"-->
-                                    <!--active-color="#13ce66"-->
-                                    <!--inactive-color="#ff4949">-->
-                                <!--</el-switch>-->
-                            <!--</template>-->
-                        <!--</el-table-column>-->
-                        <!--<el-table-column-->
-                            <!--width="320"-->
-                            <!--label="接收人"-->
-                        <!--&gt;-->
-                            <!--<template slot-scope="scope">-->
-                                <!--<div>{{scope.row.kwargs.receiver}}</div>-->
-                            <!--</template>-->
-                        <!--</el-table-column>-->
-                        <!--<el-table-column-->
-                            <!--width="320"-->
-                            <!--label="抄送人"-->
-                        <!--&gt;-->
-                            <!--<template slot-scope="scope">-->
-                                <!--<div>{{scope.row.kwargs.copy}}</div>-->
-                            <!--</template>-->
-                        <!--</el-table-column>-->
+                        <el-table-column
+                            width="80"
+                            label="状态"
+                        >
+                            <template slot-scope="scope">
+                                <el-switch
+                                    disabled
+                                    v-model="scope.row.enabled"
+                                    active-color="#13ce66"
+                                    inactive-color="#ff4949">
+                                </el-switch>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                            width="320"
+                            label="接收人"
+                        >
+                            <template slot-scope="scope">
+                                <div>{{scope.row.receiver}}</div>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                            width="320"
+                            label="抄送人"
+                        >
+                            <template slot-scope="scope">
+                                <div>{{scope.row.copy}}</div>
+                            </template>
+                        </el-table-column>
 
                         <el-table-column
                             width="200"
@@ -121,6 +121,7 @@
                                         type="info"
                                         icon="el-icon-edit"
                                         circle size="mini"
+                                        @click="handleEditTask(scope.$index, scope.row)"
                                     ></el-button>
                                     <el-button
                                         type="danger"
@@ -178,6 +179,9 @@
                         }
                     })
                 })
+            },
+            handleEditTask(index, row) {
+                this.$emit('respConfig', row);
             },
             handleCurrentChange(val) {
                 this.$api.getTaskPaginationBypage({

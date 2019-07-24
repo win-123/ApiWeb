@@ -59,7 +59,7 @@
             </div>
         </el-header>
 
-        <el-container>
+        <el-container v-if="projectData.data">
             <el-main style="padding: 0; margin-left: 10px">
                 <el-table
                     highlight-current-row
@@ -109,7 +109,7 @@
                         align="center"
                     >
                         <template slot-scope="scope">
-                            <span>{{ scope.row.update_time || date | formatDate }}</span>
+                            <span>{{ scope.row.update_time || date | datetimeFormat }}</span>
                         </template>
                     </el-table-column>
 
@@ -196,18 +196,7 @@
                 }
             }
         },
-        filters: {
-            formatDate:function (value) {
-                var date = new Date(value);
-                var year = date.getFullYear();
-                var month = date.getMonth()+1;
-                var day = date.getDate();
-                var hours = date.getHours();
-                var minutes = date.getMinutes();
-                var seconds = date.getSeconds();
-                return year + '-' + month + '-' + day + ' ' + ' ' + hours + ':' + minutes + ':' + seconds;
-            }
-        },
+
         methods: {
             handleCellClick(row) {
                 this.$store.commit('setRouterName', 'ProjectDetail');

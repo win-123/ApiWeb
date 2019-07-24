@@ -1,5 +1,5 @@
 <template>
-    <el-container>
+    <el-container v-if="reportData.data">
         <el-header style="padding: 0; height: 50px; margin-top: 10px">
             <div style="padding-top: 8px; padding-left: 30px;">
                 <el-row>
@@ -219,12 +219,10 @@
         methods: {
             cellMouseEnter(row) {
                 this.currentRow = row;
-                console.log(111111, this.currentRow)
             },
 
             cellMouseLeave(row) {
                 this.currentRow = '';
-                console.log(222222, this.currentRow)
 
 
             },

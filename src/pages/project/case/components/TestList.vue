@@ -1,5 +1,5 @@
 <template>
-    <el-container>
+    <el-container   v-if="testData.data">
         <el-header style="padding-top: 10px; height: 50px;">
             <div style="overflow: hidden">
                 <el-row :gutter="50">
@@ -104,6 +104,7 @@
                   </span>
                     </el-dialog>
                     <el-table
+
                         highlight-current-row
                         v-loading="loading"
                         ref="multipleTable"

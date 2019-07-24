@@ -1,6 +1,6 @@
 <template>
 
-    <el-container>
+    <el-container v-if="hostIPData.data">
         <el-header style="background: #fff; padding: 0; height: 50px">
             <div class="nav-api-header">
                 <div style="padding-top: 10px; margin-left: 20px">
@@ -85,12 +85,12 @@
                 <div style="padding-top: 8px; padding-left: 30px; overflow: hidden">
                     <el-pagination
                         :page-size="11"
-                        v-show="hostIPData.count !== 0 "
+                        v-show="hostIPData.data.length !== 0 "
                         background
                         @current-change="handleCurrentChange"
                         :current-page.sync="currentPage"
                         layout="total, prev, pager, next, jumper"
-                        :total="hostIPData.count"
+                        :total="hostIPData.data.length"
                     >
                     </el-pagination>
 
@@ -135,7 +135,7 @@
                                 label="更新时间"
                             >
                                 <template slot-scope="scope">
-                                    <div>{{scope.row.update_time || date | formatDate }}</div>
+                                    <div>{{scope.row.update_time || date | datetimeFormat }}</div>
 
                                 </template>
                             </el-table-column>
@@ -152,7 +152,7 @@
 
 
                                         <el-button
-                                            v-show="hostIPData.count !== 0"
+                                            v-show="hostIPData.data.length !== 0"
                                             type="danger"
                                             icon="el-icon-delete"
                                             circle size="mini"
@@ -212,18 +212,7 @@
                 }
             }
         },
-        filters: {
-            formatDate:function (value) {
-                var date = new Date(value);
-                var year = date.getFullYear();
-                var month = date.getMonth()+1;
-                var day = date.getDate();
-                var hours = date.getHours();
-                var minutes = date.getMinutes();
-                var seconds = date.getSeconds();
-                return year + '-' + month + '-' + day + ' ' + ' ' + hours + ':' + minutes + ':' + seconds;
-            }
-        },
+
         methods: {
             cellMouseEnter(row) {
                 this.currentRow = row;

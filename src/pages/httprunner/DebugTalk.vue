@@ -32,7 +32,7 @@
 
         </el-header>
 
-        <el-container>
+        <el-container v-if="code">
             <el-main style="padding: 0; margin-left: 10px">
                 <el-row>
                     <el-col :span="15">
@@ -62,8 +62,6 @@
                         >
                         </editor>
                     </el-col>
-
-
                 </el-row>
 
             </el-main>
@@ -91,7 +89,9 @@
         methods: {
             handleRunCode() {
                 this.resp.msg = '';
-                this.$api.runDebugtalk(this.code).then(resp => {
+                this.$api.runDebugtalk(
+                     this.code
+                ).then(resp => {
                     this.resp = resp;
                 })
             },
@@ -119,6 +119,10 @@
                     params: params
                 }).then(res => {
                     this.code = res.data;
+                    for (var i=0; i< this.code.length; i++){
+                        this.code.code = this.code[i].code;
+                        this.code.id = this.code[i].id;
+                    }
                 })
             }
         },
