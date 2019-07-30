@@ -11,7 +11,7 @@
                     </el-button>
 
                     <el-button style="margin-left: 50px"
-                               type="info"
+                               type="primary"
                                round
                                size="small"
                                icon="el-icon-d-arrow-left"
@@ -21,7 +21,7 @@
                         上一页
                     </el-button>
 
-                    <el-button type="info"
+                    <el-button type="primary"
                                round
                                size="small"
                                :disabled="projectData.next === null"

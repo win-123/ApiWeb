@@ -153,7 +153,6 @@
                         base_url: this.baseUrl,
                         name: this.name,
                         project: this.project,
-
                     }).then(resp => {
                         if (resp.success) {
                             this.$emit("addSuccess");

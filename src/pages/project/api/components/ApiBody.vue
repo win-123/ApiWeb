@@ -5,6 +5,7 @@
                 <el-input
                     style="width: 600px"
                     placeholder="请输入接口名称"
+                    size="Small"
                     v-model="name"
                     clearable
                 >

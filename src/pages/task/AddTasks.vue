@@ -24,9 +24,9 @@
 
                             <el-form-item label="邮件策略" prop="strategy">
                                 <el-radio-group v-model="ruleForm.strategy">
-                                    <el-radio label="始终发送"></el-radio>
-                                    <el-radio label="仅失败发送"></el-radio>
-                                    <el-radio label="从不发送"></el-radio>
+                                    <el-radio :label="1">始终发送</el-radio>
+                                    <el-radio :label="2">仅失败发送</el-radio>
+                                    <el-radio :label="3">从不发送</el-radio>
                                 </el-radio-group>
                             </el-form-item>
 
@@ -214,7 +214,11 @@
                     name: '',
                     switch: true,
                     corntab: '',
-                    strategy: '始终发送',
+                    strategy: {
+                        1: '始终发送',
+                        2: '仅失败发送',
+                        3: '从不发送',
+                    },
                     receiver: '',
                     copy: ''
                 },

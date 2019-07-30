@@ -130,7 +130,7 @@
                         <el-input
                             placeholder="输入关键字进行过滤"
                             v-model="filterText"
-                            size="medium"
+                            size="Small"
                             clearable
                             prefix-icon="el-icon-search"
                         >

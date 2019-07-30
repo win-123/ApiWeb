@@ -13,7 +13,7 @@
                     </el-col>
 
                     <el-col :span="6" v-if="apiData.data.length >= 1">
-                        <el-input placeholder="请输入接口名称" clearable v-model="search">
+                        <el-input placeholder="请输入接口名称" clearable v-model="search" size="Small">
                             <el-button slot="append" icon="el-icon-search" @click="getAPIList"></el-button>
                         </el-input>
                     </el-col>
@@ -128,16 +128,10 @@
                         @selection-change="handleSelectionChange"
                         v-loading="loading"
                     >
-                        <el-table-column
-                            type="selection"
-                            width="40"
-                        >
+                        <el-table-column type="selection" width="40">
                         </el-table-column>
 
-                        <el-table-column
-                            min-width="450"
-                            align="center"
-                        >
+                        <el-table-column width="600" align="center">
                             <template slot-scope="scope">
                                 <div class="block block_post" v-if="scope.row.method.toUpperCase() === 'POST' ">
                                     <span class="block-method block_method_post block_method_color">POST</span>
@@ -375,8 +369,21 @@
                 }
             },
             getTree() {
-                this.$api.getTree(this.$route.params.id, {params: {type: 1}}).then(resp => {
-                    this.dataTree = resp.tree;
+                this.$api.getTree({
+                    params: {
+                        project: this.$route.params.id,
+                        type: 1
+                    }
+                }).then(resp => {
+                    this.RelationData = resp;
+                    for(var i=0; i< this.RelationData.data.length; i++){
+                        this.dataTree = eval('('+ this.RelationData.data[i].tree+ ')');
+                        this.treeId = this.RelationData.data[i].id;
+                        this.maxId = this.RelationData.data[i].maxId;
+                        for(var j=0; j<this.dataTree.length; j++){
+                            this.treeData = this.dataTree[j]
+                        }
+                    }
                     this.dialogTreeVisible = true;
                 })
             },
@@ -439,7 +446,7 @@
             // 编辑API
             handleRowClick(row) {
                 this.$api.getAPISingle(row.id).then(resp => {
-                    if (resp.success) {
+                    if (resp.code==0) {
                         this.$emit('api', resp);
                     } else {
                         this.$message.error(resp.msg)

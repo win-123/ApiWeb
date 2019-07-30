@@ -142,9 +142,7 @@
                             label="用例类型"
                         >
                             <template slot-scope="scope">
-                                <el-tag v-if="scope.row.tag==='1'">{{scope.row.tag}}</el-tag>
-                                <el-tag v-if="scope.row.tag==='2'" type="success">{{scope.row.tag}}</el-tag>
-                                <el-tag v-if="scope.row.tag==='3'" type="danger">{{scope.row.tag}}</el-tag>
+                                <el-tag>{{ scope.row.tag | formatTestType}}</el-tag>
                                 <!--<el-tag v-if="scope.row.tag==='冒烟用例'">{{scope.row.tag}}</el-tag>-->
                                 <!--<el-tag v-if="scope.row.tag==='集成用例'" type="success">{{scope.row.tag}}</el-tag>-->
                                 <!--<el-tag v-if="scope.row.tag==='监控脚本'" type="danger">{{scope.row.tag}}</el-tag>-->
@@ -302,13 +300,37 @@
                 var minutes = date.getMinutes();
                 var seconds = date.getSeconds();
                 return year + '-' + month + '-' + day + ' ' + ' ' + hours + ':' + minutes + ':' + seconds;
+            },
+            formatTestType (num){
+                if (num == 1) {
+                    return "冒烟用例"
+                }
+                if (num == 2) {
+                    return "集成用例"
+                }
+                else {
+                    return "监控脚本"
+                }
             }
         },
 
         methods: {
             getTree() {
-                this.$api.getTree(this.$route.params.id, {params: {type: 2}}).then(resp => {
-                    this.dataTree = resp.tree;
+                this.$api.getTree({
+                    params: {
+                        project: this.$route.params.id,
+                        type: 2
+                    }
+                }).then(resp => {
+                    this.RelationData = resp;
+                    for(var i=0; i< this.RelationData.data.length; i++){
+                        this.dataTree = eval('('+ this.RelationData.data[i].tree+ ')');
+                        this.treeId = this.RelationData.data[i].id;
+                        this.maxId = this.RelationData.data[i].maxId;
+                        for(var j=0; j<this.dataTree.length; j++){
+                            this.treeData = this.dataTree[j]
+                        }
+                    }
                     this.dialogTreeVisible = true;
                 })
             },
@@ -373,6 +395,7 @@
 
             handleEditTest(id) {
                 this.$api.editTest(id).then(resp => {
+                    console.log(4544545, resp)
                     this.$emit('testStep', resp);
                 })
             },

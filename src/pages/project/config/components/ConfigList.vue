@@ -1,9 +1,9 @@
 <template>
-    <el-container   v-if="configData.data">
+    <el-container v-if="configData.data">
         <el-header style="padding-top: 10px; height: 50px;">
             <div>
                 <el-row :gutter="50">
-                    <el-col :span="6" v-if="configData.data.length > 11">
+                    <el-col :span="6" v-if="configData.data.length >= 1">
                         <el-input placeholder="请输入配置名称" clearable v-model="search">
                             <el-button slot="append" icon="el-icon-search" @click="getConfigList"></el-button>
                         </el-input>
@@ -37,44 +37,27 @@
                         @cell-mouse-leave="cellMouseLeave"
                         @selection-change="handleSelectionChange"
                     >
-                        <el-table-column
-                            type="selection"
-                            width="55"
-                        >
-                        </el-table-column>
+                        <el-table-column type="selection" width="55"></el-table-column>
 
-                        <el-table-column
-                            label="配置名称"
-
-                        >
+                        <el-table-column label="配置名称">
                             <template slot-scope="scope">
                                 <div>{{scope.row.name}}</div>
                             </template>
                         </el-table-column>
 
-                        <el-table-column
-
-                            label="基本请求地址"
-                        >
+                        <el-table-column label="基本请求地址">
                             <template slot-scope="scope">
                                 <div v-text="scope.row.base_url === '' ? '无' : scope.row.base_url"></div>
-
                             </template>
                         </el-table-column>
 
-                        <el-table-column
-
-                            label="更新时间"
-                        >
+                        <el-table-column label="更新时间">
                             <template slot-scope="scope">
                                 <div>{{scope.row.update_time || date | formatDate }}</div>
-
                             </template>
                         </el-table-column>
 
-                        <el-table-column
-
-                        >
+                        <el-table-column>
                             <template slot-scope="scope">
                                 <el-row v-show="currentRow === scope.row">
                                     <el-button
@@ -101,9 +84,7 @@
                                     </el-button>
                                 </el-row>
                             </template>
-
                         </el-table-column>
-
                     </el-table>
                 </div>
             </el-main>

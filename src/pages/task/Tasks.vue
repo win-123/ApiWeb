@@ -76,7 +76,7 @@
                             label="邮件策略"
                         >
                             <template slot-scope="scope">
-                                <div>{{scope.row.send_type}}</div>
+                                <div>{{scope.row.send_type | formatSendNum}}</div>
 
                             </template>
                         </el-table-column>
@@ -164,6 +164,19 @@
                     count: 0,
                     results: []
                 },
+            }
+        },
+        filters :{
+            formatSendNum (num){
+                if (num == 1) {
+                    return "始终发送"
+                }
+                if (num == 2) {
+                    return "仅失败发送"
+                }
+                else {
+                    return "从不发送"
+                }
             }
         },
         methods: {
