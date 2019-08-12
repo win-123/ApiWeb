@@ -218,14 +218,14 @@
                         body: {
                             name: '',
                             times: 1,
-                            url: '',
-                            method: 'POST',
-                            header: [{
-                                key: "",
-                                value: "",
-                                desc: ""
-                            }],
                             request: {
+                                url: '',
+                                method: 'POST',
+                                header: [{
+                                    key: "",
+                                    value: "",
+                                    desc: ""
+                                }],
                                 data: [{
                                     key: "",
                                     value: "",
@@ -238,29 +238,30 @@
                                     desc: "",
                                     type: 1
                                 }],
-                                json_data: ''
+                                json_data: '',
+                                validate: [{
+                                    expect: "",
+                                    actual: "",
+                                    comparator: "equals",
+                                    type: 1
+                                }],
+                                variables: [{
+                                    key: "",
+                                    value: "",
+                                    desc: "",
+                                    type: 1
+                                }],
+                                extract: [{
+                                    key: "",
+                                    value: "",
+                                    desc: ""
+                                }],
+                                hooks: [{
+                                    setup: "",
+                                    teardown: ""
+                                }]
                             },
-                            validate: [{
-                                expect: "",
-                                actual: "",
-                                comparator: "equals",
-                                type: 1
-                            }],
-                            variables: [{
-                                key: "",
-                                value: "",
-                                desc: "",
-                                type: 1
-                            }],
-                            extract: [{
-                                key: "",
-                                value: "",
-                                desc: ""
-                            }],
-                            hooks: [{
-                                setup: "",
-                                teardown: ""
-                            }]
+
                         }
                     };
                 }

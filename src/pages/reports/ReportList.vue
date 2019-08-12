@@ -61,15 +61,15 @@
 
                         <el-table-column
                             label="报告类型"
-                            width="100"
                         >
                             <template slot-scope="scope">
-                                <el-tag color="#2C3E50" style="color: white">{{scope.row.type}}</el-tag>
+                                <el-tag color="#2C3E50" style="color: white">{{scope.row.type | formatReportType}}</el-tag>
                             </template>
                         </el-table-column>
 
                         <el-table-column
                             label="报告名称"
+                            width="200"
                         >
                             <template slot-scope="scope">
                                 <div>{{scope.row.name}}</div>
@@ -78,6 +78,7 @@
 
                         <el-table-column
                             label="通过状态"
+                            width="150"
                         >
                             <template slot-scope="scope">
                                 <div
@@ -115,27 +116,27 @@
                                             </el-table-column>
                                             <el-table-column width="80" label="总计接口">
                                                 <template slot-scope="prop">
-                                                     <el-tag>{{ prop.row.stat.testsRun }}</el-tag>
+                                                     <el-tag>{{ prop.row.stat.teststeps.total }}</el-tag>
                                                 </template>
                                             </el-table-column>
                                             <el-table-column width="80"  label="通过个数">
                                                 <template slot-scope="prop">
-                                                    <el-tag type="success"> {{ prop.row.stat.successes }}</el-tag>
+                                                    <el-tag type="success"> {{ prop.row.stat.teststeps.successes }}</el-tag>
                                                 </template>
                                             </el-table-column>
                                             <el-table-column width="80" label="失败个数">
                                                 <template slot-scope="prop">
-                                                    <el-tag type="danger">{{ prop.row.stat.failures }}</el-tag>
+                                                    <el-tag type="danger">{{ prop.row.stat.teststeps.failures }}</el-tag>
                                                 </template>
                                             </el-table-column>
                                             <el-table-column width="80" label="异常个数">
                                                 <template slot-scope="prop">
-                                                    <el-tag type="warning">{{ prop.row.stat.errors }}</el-tag>
+                                                    <el-tag type="warning">{{ prop.row.stat.teststeps.errors }}</el-tag>
                                                 </template>
                                             </el-table-column>
                                             <el-table-column width="80"  label="跳过个数">
                                                 <template slot-scope="prop">
-                                                    <el-tag type="info">{{ prop.row.stat.skipped }}</el-tag>
+                                                    <el-tag type="info">{{ prop.row.stat.teststeps.skipped }}</el-tag>
                                                 </template>
                                             </el-table-column>
                                             <el-table-column width="150"  label="系统信息">
@@ -203,10 +204,26 @@
                 dialogTableVisible: false,
             }
         },
+        filters :{
+            formatReportType (num){
+                if (num == 1) {
+                    return "调试用例报告"
+                }
+                if (num == 2) {
+                    return "异步任务报告"
+                }
+                else {
+                    return "定时任务报告"
+                }
+            }
+        },
         methods: {
 
             handleClick(row) {
-                this.reportData2 = eval(row)
+                var row_data = '';
+                row_data = row.toLowerCase();
+
+                this.reportData2 = eval(row_data);
                 this.dialogTableVisible = true
             },
 

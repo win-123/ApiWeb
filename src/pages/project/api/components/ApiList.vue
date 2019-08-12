@@ -206,7 +206,7 @@
                                         type="danger"
                                         icon="el-icon-delete"
                                         circle size="mini"
-                                        @click="handleDelApi(scope.row.id)"
+                                        @click="handleDelApi(scope.$index, scope.row)"
                                     >
                                     </el-button>
                                 </el-row>
@@ -427,14 +427,14 @@
             },
 
             //删除api
-            handleDelApi(index) {
+            handleDelApi(index, row) {
                 this.$confirm('此操作将永久删除该API，是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning',
                 }).then(() => {
-                    this.$api.delAPI(index).then(resp => {
-                        if (resp.success) {
+                    this.$api.delAPI({data: {"id": row["id"]}}).then(resp => {
+                        if (resp.code == 0) {
                             this.getAPIList();
                         } else {
                             this.$message.error(resp.msg);
@@ -445,7 +445,11 @@
 
             // 编辑API
             handleRowClick(row) {
-                this.$api.getAPISingle(row.id).then(resp => {
+                this.$api.getAPISingle({
+                    params: {
+                        row: row.id,
+                    }
+                }).then(resp => {
                     if (resp.code==0) {
                         this.$emit('api', resp);
                     } else {
