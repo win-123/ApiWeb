@@ -255,7 +255,7 @@
                         name: this.name,
                         times: this.times,
                     }).then(resp => {
-                        if (resp.success) {
+                        if (resp.code == 0) {
                             this.$emit('addSuccess');
                         } else {
                             this.$message.error({

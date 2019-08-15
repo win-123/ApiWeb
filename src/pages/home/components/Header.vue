@@ -1,21 +1,23 @@
 <template>
-    <div>
-        <div class="nav-header">
-
+    <div class="nav-header">
+        <span class="right">
             <span style="color: white; font-size: 25px; margin-left: 10px">ApiMange 测试平台</span>
-            <span class="right">
-                <div style="float: right; color: #d9d9d9; margin-right: 100px">
 
+            <div style="float: right; color: #d9d9d9; margin-right: 100px">
+                <el-dropdown>
                     <i class="iconfont">&#xe61c;</i>
+                    <el-dropdown-menu slot="dropdown">
+                      <el-dropdown-item>查看</el-dropdown-item>
+                      <el-dropdown-item>新增</el-dropdown-item>
+                      <el-dropdown-item>删除</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+                <span v-text="this.$store.state.username" style="padding-left: 5px; font-size: large"></span>
+                <a style="padding-left: 10px;" @click="handleLogOut">注 销</a>
+            </div>
+        </span>
 
-                    <span v-text="this.$store.state.username" style="padding-left: 5px; font-size: large"></span>
-                    <a style="padding-left: 10px;" @click="handleLogOut">注 销</a>
-                </div>
-            </span>
-
-        </div>
     </div>
-
 
 </template>
 
@@ -46,7 +48,7 @@
 
     .right {
         position: fixed;
-        left: 300px;
+        left: 202px;
         right: 0;
         top: 0;
 

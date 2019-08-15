@@ -372,7 +372,14 @@
 
             handleRunTest(id, name) {
                 this.loading = true;
-                this.$api.runTestByPk(id, {params: {project: this.project, name: name,host:this.host}}).then(resp => {
+                this.$api.runTestByPk({
+                    params: {
+                        id: id,
+                        project: this.project,
+                        name: name,
+                        host:this.host
+                    }
+                }).then(resp => {
                     this.summary = resp;
                     this.dialogTableVisible = true;
                     this.loading = false;

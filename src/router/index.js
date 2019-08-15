@@ -16,6 +16,8 @@ import HostAddress from '@/pages/variables/HostAddress'
 import Cover from '@/pages/cover/Cover'
 import Help from '@/pages/help/Help'
 
+import Page from '@/pages/demo/MainPage'
+
 Vue.use(Router);
 
 export default new Router({
@@ -154,18 +156,27 @@ export default new Router({
                     }
 
                 },
-                {
-                    name: 'Help',
-                    path: 'help',
-                    component: Help,
-                    meta: {
-                        title: '小工具',
-                        requireAuth: true
-                    }
-
-                }
             ]
         },
+        {
+            path: '/page',
+            name: 'Page',
+            component: Page,
+            meta: {
+                title: 'Page'
+            }
+        },
+        {
+            name: 'Help',
+            path: 'help',
+            component: Help,
+            meta: {
+                title: '小工具',
+                requireAuth: true
+            }
+
+        },
+
 
     ]
 })

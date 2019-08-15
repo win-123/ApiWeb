@@ -1,5 +1,4 @@
 <template>
-
     <el-menu
         class="common-side-bar"
         :default-active="$store.state.routerName"
@@ -12,7 +11,7 @@
             <i class="iconfont" >&#xe631;</i>&nbsp;&nbsp;首  页
         </el-menu-item>
 
-       <el-submenu index="ApiTest">
+        <el-submenu index="ApiTest">
             <template slot="title">
                 <i class="el-icon-view"></i>
                 <span slot="title">接口自动化</span>
@@ -23,27 +22,34 @@
                     <span class="iconfont" v-html="item.code"></span>&nbsp;&nbsp;{{item.name}}
                 </el-menu-item>
             </el-menu-item-group>
-       </el-submenu>
-       <el-menu-item index="Pressure" disabled>
-            &nbsp;<span class="iconfont">&#xe61f;</span>&nbsp;&nbsp;压力测试
-       </el-menu-item>
+        </el-submenu>
 
-       <el-submenu index="Pressure">
-           <template slot="title">
-               <i class="el-icon-setting"></i>
-               <span slot="title">帮助工具</span>
-           </template>
-           <el-menu-item-group>
-               <el-menu-item v-for="item of side_menu2" :index="item.url" :key="item.url" :disabled="$store.state.routerName === 'ProjectList'">
-                   <span class="iconfont" v-html="item.code"></span>&nbsp;&nbsp;{{item.name}}
-               </el-menu-item>
-           </el-menu-item-group>
-       </el-submenu>
+        <el-submenu index="Pressure">
+            <template slot="title">
+                <i class="el-icon-loading"></i>
+                <span slot="title">压力测试</span>
+            </template>
+            <el-menu-item-group>
+                <el-menu-item v-for="item of side_menu2" :index="item.url" :key="item.url" :disabled="$store.state.routerName === 'ProjectList'">
+                    <span class="iconfont" v-html="item.code"></span>&nbsp;&nbsp;{{item.name}}
+                </el-menu-item>
+            </el-menu-item-group>
+        </el-submenu>
 
-
-
+        <el-submenu index="Help">
+            <template slot="title">
+                <i class="el-icon-setting"></i>
+                <span slot="title">帮助工具</span>
+            </template>
+            <el-menu-item-group>
+                <el-menu-item v-for="item of side_menu3" :index="item.url" :key="item.url" :disabled="$store.state.routerName === 'ProjectList'">
+                    <span class="iconfont" v-html="item.code"></span>&nbsp;&nbsp;{{item.name}}
+                </el-menu-item>
+            </el-menu-item-group>
+        </el-submenu>
 
     </el-menu>
+
 </template>
 
 <script>
@@ -63,8 +69,13 @@
                     {name: "历史报告", url: "Reports", code: "&#xe66e;"},
                 ],
                 side_menu2: [
-                    {name: "帮助工具", url: "Help", code: "&#xe57a;"},
-                    {name: "导入excel", url: "#", code: "&#xe65e;"}
+                    {name: "压力测试", url: "#", code: "&#xe692;"},
+
+                ],
+                side_menu3: [
+                    {name: "帮助工具", url: "Help", code: "&#xe692;"},
+                    {name: "导入excel", url: "#", code: "&#xe692;"},
+                    {name: "分页组件", url: "Page", code: "&#xe692;"},
                 ],
             }
         },
@@ -82,7 +93,7 @@
 
     .common-side-bar {
         position: fixed;
-        top: 48px;
+        padding-top: 48px;
         border-right: 1px solid #ddd;
         height: 100%;
         width: 202px;
