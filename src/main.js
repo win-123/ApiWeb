@@ -13,9 +13,9 @@ import 'styles/reports.css'
 import * as api from './restful/api'
 import store from './store'
 
-Vue.config.productionTip = false
-Vue.use(ElementUI)
-Vue.prototype.$api = api
+Vue.config.productionTip = false;
+Vue.use(ElementUI);
+Vue.prototype.$api = api;
 
 Vue.filter('datetimeFormat', function (time, format = 'YY-MM-DD hh:mm:ss') {
     let date = new Date(time);

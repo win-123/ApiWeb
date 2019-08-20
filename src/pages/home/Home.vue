@@ -1,5 +1,4 @@
 <template>
-
     <el-container>
         <el-aside style="width: 202px;">
             <home-side></home-side>

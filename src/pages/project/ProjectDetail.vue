@@ -1,5 +1,4 @@
 <template>
-
     <div >
         <ul class="title-project">
             <li class="title-li" title="Test API Project">
@@ -8,7 +7,6 @@
 
             </li>
         </ul>
-
         <ul class="project_detail">
             <li class="pull-left">
                 <p class="title-p"><i class="iconfont">&#xe74a;</i> &nbsp;{{projectInfo.api_count || 0}} 个接口</p>
@@ -47,8 +45,8 @@
                 <p class="desc-p">测试报告总数</p>
             </li>
 
-
         </ul>
+        <div id="echartContainer"  class="chart"></div>
 
 
     </div>
@@ -56,13 +54,16 @@
 
 <script>
     import { getProjectDetail} from '@/restful/api'
+    var echarts = require('echarts')
     export default {
         name: "ProjectDetail",
         data() {
             return {
-                projectInfo: {}
+                projectInfo: {},
+                projectValue:[],
             }
         },
+
         methods: {
             success(resp) {
                 this.$notify({
@@ -85,13 +86,38 @@
                 getProjectDetail({
                     params: params
                 }).then(res => {
-                    this.projectInfo = res.data
+                    this.projectInfo = res.data;
+                    this.projectValue.push(this.projectInfo.api_count)
+                    this.projectValue.push(this.projectInfo.case_count)
+                    this.projectValue.push(this.projectInfo.config_count)
+                    this.projectValue.push(this.projectInfo.variables_count)
+                    this.projectValue.push(this.projectInfo.host_count)
+                    this.projectValue.push(this.projectInfo.task_count)
+                    this.projectValue.push(this.projectInfo.report_count)
+                    console.log(12121212, typeof this.projectValue)
                 })
             }
         },
         mounted() {
             this.getDetail();
-        }
+
+            var myChart = echarts.init(document.getElementById('echartContainer'));
+            myChart.setOption({
+                title: { text: 'ApiManage 项目详情' },
+                tooltip: {},
+                xAxis: {
+                    data: ["接口","用例","配置","变量","环境","任务","报告"]
+                },
+                yAxis: {},
+                series: [{
+                    name: '数量',
+                    type: 'bar',
+                    data: this.projectValue
+                }],
+
+            });
+        },
+
     }
 </script>
 
@@ -154,5 +180,10 @@
         margin-top: 10px;
         color: #b6b6b6;
         font-size: 14px;
+    }
+    .chart {
+        margin-top: 20px;
+        width:80%;
+        height:500px
     }
 </style>

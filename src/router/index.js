@@ -15,8 +15,9 @@ import Tasks from '@/pages/task/Tasks'
 import HostAddress from '@/pages/variables/HostAddress'
 import Cover from '@/pages/cover/Cover'
 import Help from '@/pages/help/Help'
+import Locust from '@/pages/locust/Locust'
 
-import Page from '@/pages/demo/MainPage'
+import Page from '@/pages/help/MainPage'
 
 Vue.use(Router);
 
@@ -172,11 +173,18 @@ export default new Router({
             component: Help,
             meta: {
                 title: '小工具',
-                requireAuth: true
             }
 
         },
+        {
+            name: 'Locust',
+            path: 'locust',
+            component: Locust,
+            meta: {
+                title: '压力测试',
+            }
 
+        },
 
     ]
 })
