@@ -13,6 +13,11 @@ import 'styles/reports.css'
 import * as api from './restful/api'
 import store from './store'
 
+// 引入excel 导入导出的js文件
+
+import Blob from './assets/excel/Blob'
+import Export2Excel from './assets/excel/Export2Excel'
+
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.prototype.$api = api;

@@ -139,20 +139,22 @@
                     </hooks>
                 </el-tab-pane>
             </el-tabs>
+
         </div>
+
 
     </div>
 
 </template>
 
 <script>
-    import Headers from '../../../httprunner/components/Headers'
-    import Request from '../../../httprunner/components/Request'
-    import Extract from '../../../httprunner/components/Extract'
-    import Validate from '../../../httprunner/components/Validate'
-    import Variables from '../../../httprunner/components/Variables'
-    import Hooks from '../../../httprunner/components/Hooks'
-    import Report from '../../../reports/DebugReport'
+    // import Headers from '../../../httprunner/components/Headers'
+    // import Request from '../../../httprunner/components/Request'
+    // import Extract from '../../../httprunner/components/Extract'
+    // import Validate from '../../../httprunner/components/Validate'
+    // import Variables from '../../../httprunner/components/Variables'
+    // import Hooks from '../../../httprunner/components/Hooks'
+    // import Report from '../../../reports/DebugReport'
 
     export default {
         components: {
@@ -367,7 +369,7 @@
                 }],
             }
         },
-        name: "ApiBody"
+        name: "LocustBody"
     }
 </script>
 

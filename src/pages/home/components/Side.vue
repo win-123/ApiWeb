@@ -24,18 +24,6 @@
             </el-menu-item-group>
         </el-submenu>
 
-        <el-submenu index="Pressure">
-            <template slot="title">
-                <i class="el-icon-loading"></i>
-                <span slot="title">压力测试</span>
-            </template>
-            <el-menu-item-group>
-                <el-menu-item v-for="item of side_menu2" :index="item.url" :key="item.url" >
-                    <span class="iconfont" v-html="item.code"></span>&nbsp;&nbsp;{{item.name}}
-                </el-menu-item>
-            </el-menu-item-group>
-        </el-submenu>
-
         <el-submenu index="Help">
             <template slot="title">
                 <i class="el-icon-setting"></i>
@@ -67,14 +55,12 @@
                     {name: "驱动代码", url: "DebugTalk", code: "&#xe7ca;"},
                     {name: "定时任务", url: "Task", code: "&#xe61e;"},
                     {name: "历史报告", url: "Reports", code: "&#xe66e;"},
-                ],
-                side_menu2: [
                     {name: "压力测试", url: "Locust", code: "&#xe602;"},
-
                 ],
+
                 side_menu3: [
                     {name: "帮助工具", url: "Help", code: "&#xe616;"},
-                    {name: "导入excel", url: "#", code: "&#xe601;"},
+                    {name: "导入excel", url: "Import", code: "&#xe601;"},
                     {name: "分页组件", url: "Page", code: "&#xe6cc;"},
                 ],
             }

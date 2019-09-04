@@ -18,6 +18,7 @@ import Help from '@/pages/help/Help'
 import Locust from '@/pages/locust/Locust'
 
 import Page from '@/pages/help/MainPage'
+import Import from '@/pages/import/Import'
 
 Vue.use(Router);
 
@@ -157,35 +158,43 @@ export default new Router({
                     }
 
                 },
+                {
+                    path: '/page',
+                    name: 'Page',
+                    component: Page,
+                    meta: {
+                        title: 'Page'
+                    }
+                },
+                {
+                    path: '/help',
+                    name: 'Help',
+                    component: Help,
+                    meta: {
+                        title: '小工具',
+                    }
+
+                },
+                {
+                    path: 'locust/:id',
+                    name: 'Locust',
+                    component: Locust,
+                    meta: {
+                        title: '压力测试',
+                    }
+
+                },
+                {
+                    path: 'import',
+                    name: 'Import',
+                    component: Import,
+                    meta: {
+                        title: '导入excel',
+                    }
+
+                },
             ]
         },
-        {
-            path: '/page',
-            name: 'Page',
-            component: Page,
-            meta: {
-                title: 'Page'
-            }
-        },
-        {
-            name: 'Help',
-            path: 'help',
-            component: Help,
-            meta: {
-                title: '小工具',
-            }
-
-        },
-        {
-            name: 'Locust',
-            path: 'locust',
-            component: Locust,
-            meta: {
-                title: '压力测试',
-            }
-
-        },
-
     ]
 })
 

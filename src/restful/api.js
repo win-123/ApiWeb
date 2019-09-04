@@ -356,3 +356,8 @@ export const getHostPaginationBypage = params => {
 export const getAllHost = params => {
     return axios.get('/host_ip/', params).then(res => res.data)
 };
+
+
+export const runLocust = params => {
+    return axios.post('/locust/', params).then(res => res.data)
+};

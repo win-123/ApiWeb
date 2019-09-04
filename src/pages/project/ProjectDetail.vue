@@ -54,7 +54,9 @@
 
 <script>
     import { getProjectDetail} from '@/restful/api'
-    var echarts = require('echarts')
+    // var echarts = require('echarts')
+    import echarts from 'echarts'
+
     export default {
         name: "ProjectDetail",
         data() {
@@ -87,35 +89,36 @@
                     params: params
                 }).then(res => {
                     this.projectInfo = res.data;
-                    this.projectValue.push(this.projectInfo.api_count)
-                    this.projectValue.push(this.projectInfo.case_count)
-                    this.projectValue.push(this.projectInfo.config_count)
-                    this.projectValue.push(this.projectInfo.variables_count)
-                    this.projectValue.push(this.projectInfo.host_count)
-                    this.projectValue.push(this.projectInfo.task_count)
-                    this.projectValue.push(this.projectInfo.report_count)
-                    console.log(12121212, typeof this.projectValue)
+                    this.projectValue[0] = this.projectInfo.api_count
+                    this.projectValue[1] = this.projectInfo.case_count
+                    this.projectValue[2] = this.projectInfo.config_count
+                    this.projectValue[3] = this.projectInfo.variables_count
+                    this.projectValue[4] = this.projectInfo.host_count
+                    this.projectValue[5] = this.projectInfo.task_count
+                    this.projectValue[6] = this.projectInfo.report_count
+                    this.chart()
+                })
+            },
+            chart(){
+                var myChart = echarts.init(document.getElementById('echartContainer'));
+                myChart.setOption({
+                    title: { text: 'ApiManage 项目详情' },
+                    tooltip: {},
+                    xAxis: {
+                        data: ["接口","用例","配置","变量","环境","任务","报告"]
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: '数量',
+                        type: 'bar',
+                        data: this.projectValue
+                    }],
+
                 })
             }
         },
         mounted() {
             this.getDetail();
-
-            var myChart = echarts.init(document.getElementById('echartContainer'));
-            myChart.setOption({
-                title: { text: 'ApiManage 项目详情' },
-                tooltip: {},
-                xAxis: {
-                    data: ["接口","用例","配置","变量","环境","任务","报告"]
-                },
-                yAxis: {},
-                series: [{
-                    name: '数量',
-                    type: 'bar',
-                    data: this.projectValue
-                }],
-
-            });
         },
 
     }
